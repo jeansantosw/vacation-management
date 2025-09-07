@@ -1,5 +1,5 @@
 import fastify from 'fastify'
-import { appGetUsersRoutes } from './http/routes'
+import { appCreateUsersRoutes, appGetUsersRoutes } from './http/routes'
 import {
   jsonSchemaTransform,
   serializerCompiler,
@@ -8,7 +8,8 @@ import {
 } from 'fastify-type-provider-zod'
 import { env } from './env'
 import fastifySwagger from '@fastify/swagger'
-import scalarAPIReference from '@scalar/fastify-api-reference'
+// import scalarAPIReference from '@scalar/fastify-api-reference'
+import fastifySwaggerUi from '@fastify/swagger-ui'
 
 export const server = fastify({
   logger: {
@@ -33,12 +34,17 @@ if (env.NODE_ENV === 'development') {
     transform: jsonSchemaTransform,
   })
 
-  server.register(scalarAPIReference, {
+  server.register(fastifySwaggerUi, {
     routePrefix: '/docs',
   })
+
+  // server.register(scalarAPIReference, {
+  //   routePrefix: '/docs',
+  // })
 }
 
 server.setValidatorCompiler(validatorCompiler)
 server.setSerializerCompiler(serializerCompiler)
 
 server.register(appGetUsersRoutes)
+server.register(appCreateUsersRoutes)

@@ -9,9 +9,9 @@ export async function getUsersControllers(
     const result = await db
       .select({ name: users.name, email: users.email })
       .from(users)
+
     return reply.send({ users: result })
   } catch (error) {
-    console.error(error)
     reply.status(401).send({
       message: 'You do not have permission to view the company list',
     })
