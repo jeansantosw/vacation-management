@@ -3,7 +3,7 @@ import {
   uuid,
   text,
   pgEnum,
-  foreignKey,
+  uniqueIndex,
   timestamp,
 } from 'drizzle-orm/pg-core'
 
@@ -25,12 +25,7 @@ export const users = pgTable(
     createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
     updatedAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
   },
-  (users) => ({
-    manager_id_fk: foreignKey({
-      columns: [users.managerId],
-      foreignColumns: [users.id],
-    }),
-  }),
+  (table) => [uniqueIndex().on(table.managerId, table.id)],
 )
 
 export const vacation = pgTable('vacation_requests', {

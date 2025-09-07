@@ -1,5 +1,5 @@
 {
-  "id": "e7e0655d-8dd3-45ba-b191-2f22cfd7b3f0",
+  "id": "a816fc5a-6d43-4624-beec-74db60be2f52",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -62,22 +62,30 @@
           "default": "now()"
         }
       },
-      "indexes": {},
-      "foreignKeys": {
-        "users_managerId_users_id_fk": {
-          "name": "users_managerId_users_id_fk",
-          "tableFrom": "users",
-          "tableTo": "users",
-          "columnsFrom": [
-            "managerId"
+      "indexes": {
+        "users_managerId_id_index": {
+          "name": "users_managerId_id_index",
+          "columns": [
+            {
+              "expression": "managerId",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
           ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
         }
       },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "users_email_unique": {
