@@ -1,7 +1,7 @@
 import { hash } from 'argon2'
-import { BadRequestError } from '@/helpers/_errors/bad-request-error'
 import type { TUsersInsert } from '@/helpers/global-types/drizzle-types'
 import type { UserRepository } from '@/repositories/drizzle/users/users-repository'
+import { UserAlreadyExistsError } from './errors/user-already-exists-error'
 
 export class CreateUsersUsecase {
   constructor(private usersRepository: UserRepository) {}
@@ -12,9 +12,7 @@ export class CreateUsersUsecase {
 
     if (userWithSameEmail) {
       // Está retornando 500 é preciso tratar esse erro
-      throw new BadRequestError(
-        'There is already another user with the same email.',
-      )
+      throw new UserAlreadyExistsError()
     }
 
     const user = await this.usersRepository.create({

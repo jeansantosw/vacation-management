@@ -1,8 +1,8 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
 import { createRequestUserControllerSchema } from './types'
-import { UnauthorizedError } from '@/helpers/_errors/unauthorized-error'
 import { DrizzleUsersRepository } from '@/repositories/drizzle/users/drizzle-users-repository'
 import { CreateUsersUsecase } from '@/use-cases/users/create-users-usecase'
+import { UserAlreadyExistsError } from '@/use-cases/users/errors/user-already-exists-error'
 export async function createUsersControllers(
   request: FastifyRequest,
   reply: FastifyReply,
@@ -22,7 +22,7 @@ export async function createUsersControllers(
 
     return reply.status(201).send({ userId: user.id })
   } catch (error) {
-    if (error instanceof UnauthorizedError) {
+    if (error instanceof UserAlreadyExistsError) {
       reply.status(409).send({ message: error.message })
     }
     request.log.error(error)
