@@ -22,6 +22,6 @@ export class CreateUsersUsecase {
       role,
     })
 
-    return user
+    return { user }
   }
 }

@@ -1,8 +1,12 @@
 import type { FastifyInstance } from 'fastify'
 import { getUsersControllers } from './controllers/users/get-users-controllers'
 import z from 'zod'
-import { createRequestUserControllerSchema } from './controllers/users/types'
+import {
+  authenticateUserControllerSchema,
+  createUserControllerSchema,
+} from './controllers/users/types'
 import { createUsersControllers } from './controllers/users/create-users-controllers'
+import { authenticateUsersControllers } from './controllers/users/authenticate-users-controllers'
 
 export async function appGetUsersRoutes(app: FastifyInstance) {
   app.get(
@@ -36,7 +40,7 @@ export async function appCreateUsersRoutes(app: FastifyInstance) {
         tags: ['Users'],
         summary: 'Create a user',
         description: 'This route only creates application users.',
-        body: createRequestUserControllerSchema,
+        body: createUserControllerSchema,
         response: {
           201: z.object({
             userId: z.uuid(),
@@ -45,5 +49,21 @@ export async function appCreateUsersRoutes(app: FastifyInstance) {
       },
     },
     createUsersControllers,
+  )
+}
+
+export async function appAuthenticateUsersRoutes(app: FastifyInstance) {
+  app.post(
+    '/sessions',
+    {
+      schema: {
+        tags: ['Users'],
+        summary: 'Sessions user',
+        description: '',
+        body: authenticateUserControllerSchema,
+        response: 200,
+      },
+    },
+    authenticateUsersControllers,
   )
 }

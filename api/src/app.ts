@@ -1,5 +1,9 @@
 import fastify from 'fastify'
-import { appCreateUsersRoutes, appGetUsersRoutes } from './http/routes'
+import {
+  appAuthenticateUsersRoutes,
+  appCreateUsersRoutes,
+  appGetUsersRoutes,
+} from './http/routes'
 import {
   jsonSchemaTransform,
   serializerCompiler,
@@ -47,8 +51,10 @@ if (env.NODE_ENV === 'development') {
 server.setValidatorCompiler(validatorCompiler)
 server.setSerializerCompiler(serializerCompiler)
 
-server.register(appGetUsersRoutes)
+// User routes
 server.register(appCreateUsersRoutes)
+server.register(appAuthenticateUsersRoutes)
+server.register(appGetUsersRoutes)
 
 server.setErrorHandler((error, _request, reply) => {
   if (error instanceof ZodError) {

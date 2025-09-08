@@ -1,19 +1,18 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
-import { createRequestUserControllerSchema } from './types'
-import { DrizzleUsersRepository } from '@/repositories/drizzle/users/drizzle-users-repository'
-import { CreateUsersUsecase } from '@/use-cases/users/create-users-usecase'
+import { createUserControllerSchema } from './types'
 import { UserAlreadyExistsError } from '@/use-cases/users/errors/user-already-exists-error'
+import { makeCreateUsersUseCase } from '@/use-cases/factories/make-create-users-usecase'
 export async function createUsersControllers(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
-  const { email, password, name, role } =
-    createRequestUserControllerSchema.parse(request.body)
+  const { email, password, name, role } = createUserControllerSchema.parse(
+    request.body,
+  )
   try {
-    const usersRepository = new DrizzleUsersRepository()
-    const createUsersUsecase = new CreateUsersUsecase(usersRepository)
+    const createUsersUsecase = makeCreateUsersUseCase()
 
-    const user = await createUsersUsecase.execute({
+    const { user } = await createUsersUsecase.execute({
       email,
       password,
       name,
