@@ -25,7 +25,6 @@ export async function createUsersControllers(
     if (error instanceof UserAlreadyExistsError) {
       reply.status(409).send({ message: error.message })
     }
-    request.log.error(error)
-    return reply.status(500).send({ message: 'Internal server error❌' })
+    throw error
   }
 }
