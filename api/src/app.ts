@@ -3,7 +3,8 @@ import {
   appAuthenticateUsersRoutes,
   appCreateUsersRoutes,
   appGetUsersRoutes,
-} from './http/routes'
+  appProfileUserRoutes,
+} from './http/controllers/users/routes'
 import {
   jsonSchemaTransform,
   serializerCompiler,
@@ -15,6 +16,7 @@ import fastifySwagger from '@fastify/swagger'
 // import scalarAPIReference from '@scalar/fastify-api-reference'
 import fastifySwaggerUi from '@fastify/swagger-ui'
 import z, { ZodError } from 'zod'
+import fastifyJwt from '@fastify/jwt'
 
 export const server = fastify({
   logger: {
@@ -28,12 +30,29 @@ export const server = fastify({
   },
 }).withTypeProvider<ZodTypeProvider>()
 
+server.setValidatorCompiler(validatorCompiler)
+server.setSerializerCompiler(serializerCompiler)
+
+server.register(fastifyJwt, {
+  secret: env.JWT_SECRET,
+})
+
 if (env.NODE_ENV === 'development') {
   server.register(fastifySwagger, {
     openapi: {
       info: {
-        title: 'Gestão de férias',
+        title: 'TaskFlow Ltda.',
+        description: 'Sistema de Gestão de Férias',
         version: '0.0.0',
+      },
+      components: {
+        securitySchemes: {
+          bearerAuth: {
+            type: 'http',
+            scheme: 'bearer',
+            bearerFormat: 'JWT',
+          },
+        },
       },
     },
     transform: jsonSchemaTransform,
@@ -48,12 +67,10 @@ if (env.NODE_ENV === 'development') {
   // })
 }
 
-server.setValidatorCompiler(validatorCompiler)
-server.setSerializerCompiler(serializerCompiler)
-
 // User routes
-server.register(appCreateUsersRoutes)
 server.register(appAuthenticateUsersRoutes)
+server.register(appProfileUserRoutes)
+server.register(appCreateUsersRoutes)
 server.register(appGetUsersRoutes)
 
 server.setErrorHandler((error, _request, reply) => {

@@ -1,7 +1,7 @@
 import type { UserRepository } from '@/repositories/drizzle/users/users-repository'
 import type {
-  IGetUserProfileUsecaseUsecaseRequest,
-  IGetUserProfileUsecaseUsecaseResponse,
+  IGetUserProfileUsecaseRequest,
+  IGetUserProfileUsecaseResponse,
 } from './types'
 import { ResourceNotExistsError } from './errors/resource-not-exists-error'
 
@@ -10,8 +10,8 @@ export class GetUserProfileUsecase {
 
   async execute({
     userId,
-  }: IGetUserProfileUsecaseUsecaseRequest): Promise<IGetUserProfileUsecaseUsecaseResponse> {
-    const user = await this.userRepository.findById(userId)
+  }: IGetUserProfileUsecaseRequest): Promise<IGetUserProfileUsecaseResponse> {
+    const user = await this.userRepository.findByUserId(userId)
 
     if (!user) {
       throw new ResourceNotExistsError()

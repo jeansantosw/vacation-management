@@ -1,14 +1,18 @@
-import { db } from '@/database/client'
-import { users } from '@/database/schema'
 import { FastifyRequest, FastifyReply } from 'fastify'
+import { getUsersControllersSchema } from './types'
+import { makeGetUsersUseCase } from '@/use-cases/factories/make-get-users-usecase'
+
 export async function getUsersControllers(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
+  const { userId } = getUsersControllersSchema.parse(request.body)
   try {
-    const result = await db
-      .select({ name: users.name, email: users.email })
-      .from(users)
+    const getUsersUseCase = makeGetUsersUseCase()
+
+    const result = await getUsersUseCase.execute({
+      userId,
+    })
 
     return reply.send({ users: result })
   } catch (error) {

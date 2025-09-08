@@ -1,4 +1,5 @@
 import type { TUserSelect } from '@/helpers/global-types/drizzle-types'
+import type { IGetUsers } from '@/repositories/drizzle/users/types'
 
 export interface IAuthenticateUsersUsecaseRequest {
   email: string
@@ -9,10 +10,18 @@ export interface IAuthenticateUsersUsecaseResponse {
   user: TUserSelect
 }
 
-export interface IGetUserProfileUsecaseUsecaseRequest {
+export interface IGetUserProfileUsecaseRequest {
   userId: string
 }
 
-export interface IGetUserProfileUsecaseUsecaseResponse {
+export interface IGetUserProfileUsecaseResponse {
   user: TUserSelect
+}
+
+export interface IGetUsersUsecaseRequest {
+  userId: string
+}
+
+export interface IGetUsersUsecaseResponse {
+  users: IGetUsers[]
 }

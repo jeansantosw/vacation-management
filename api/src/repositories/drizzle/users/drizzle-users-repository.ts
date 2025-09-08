@@ -5,8 +5,17 @@ import type { TUsersInsert } from '@/helpers/global-types/drizzle-types'
 import type { UserRepository } from './users-repository'
 
 export class DrizzleUsersRepository implements UserRepository {
-  async findById(id: string) {
+  async findByUserId(id: string) {
     const [user] = await db.select().from(users).where(eq(users.id, id))
+
+    return user
+  }
+
+  async findManyByUserId(userId: string) {
+    const user = await db
+      .select({ name: users.name, email: users.email, role: users.role })
+      .from(users)
+      .where(eq(users.managerId, userId))
 
     return user
   }
