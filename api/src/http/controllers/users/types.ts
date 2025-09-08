@@ -1,6 +1,5 @@
+import { userRoleSchema } from '@/helpers/global-types/types'
 import z from 'zod'
-
-const userRoleSchema = z.enum(['admin', 'manager', 'collaborator'])
 
 export const createRequestUserControllerSchema = z.object({
   email: z.email(),

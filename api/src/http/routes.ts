@@ -39,7 +39,7 @@ export async function appCreateUsersRoutes(app: FastifyInstance) {
         body: createRequestUserControllerSchema,
         response: {
           201: z.object({
-            userId: z.string(),
+            userId: z.uuid(),
           }),
         },
       },
