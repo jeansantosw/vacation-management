@@ -11,7 +11,15 @@ export class DrizzleUsersRepository implements UserRepository {
     return user
   }
 
-  async findManyByUserId(userId: string) {
+  async findManyUser() {
+    const user = await db
+      .select({ name: users.name, email: users.email, role: users.role })
+      .from(users)
+
+    return user
+  }
+
+  async findManyByManagerId(userId: string) {
     const user = await db
       .select({ name: users.name, email: users.email, role: users.role })
       .from(users)
@@ -27,7 +35,6 @@ export class DrizzleUsersRepository implements UserRepository {
   }
 
   async create(data: TUsersInsert) {
-    console.log('#### DATA ####: ', data)
     const [user] = await db.insert(users).values(data).returning()
 
     return user

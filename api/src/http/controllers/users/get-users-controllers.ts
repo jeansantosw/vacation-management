@@ -1,12 +1,13 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
-import { getUsersControllersSchema } from './types'
 import { makeGetUsersUseCase } from '@/use-cases/factories/make-get-users-usecase'
+import { UnauthorizedError } from '@/helpers/_errors/unauthorized-error'
+import { ResourceNotExistsError } from '@/use-cases/users/errors/resource-not-exists-error'
 
 export async function getUsersControllers(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
-  const { userId } = getUsersControllersSchema.parse(request.body)
+  const userId = await request.getCurrentUserId()
   try {
     const getUsersUseCase = makeGetUsersUseCase()
 
@@ -16,8 +17,16 @@ export async function getUsersControllers(
 
     return reply.send({ users: result })
   } catch (error) {
-    reply.status(401).send({
-      message: 'You do not have permission to view the company list',
-    })
+    if (error instanceof UnauthorizedError) {
+      return reply.status(401).send({
+        message: error.message,
+      })
+    }
+    if (error instanceof ResourceNotExistsError) {
+      return reply.status(404).send({
+        message: error.message,
+      })
+    }
+    throw error
   }
 }

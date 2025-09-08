@@ -1,6 +1,6 @@
 import type { FastifyInstance } from 'fastify'
 import { getUsersControllers } from './get-users-controllers'
-import z from 'zod'
+import z, { uuid } from 'zod'
 import {
   authenticateUserControllerSchema,
   createUserControllerSchema,
@@ -57,31 +57,33 @@ export async function appCreateUsersRoutes(app: FastifyInstance) {
 }
 
 export async function appGetUsersRoutes(app: FastifyInstance) {
-  app.get(
-    '/users',
-    {
-      schema: {
-        tags: ['Users'],
-        summary: 'Get all users',
-        description: 'This route lists all users of the application.',
-        querystring: z.object({
-          userId: z.string(),
-        }),
-        response: {
-          201: z.object({
-            users: z.array(
-              z.object({
-                name: z.string(),
-                email: z.uuid(),
-                role: userRoleSchema,
-              }),
-            ),
-          }),
+  app
+    .withTypeProvider<ZodTypeProvider>()
+    .register(auth)
+    .get(
+      '/users',
+      {
+        schema: {
+          tags: ['Users'],
+          summary: 'Get all users',
+          description: 'This route lists all users of the application.',
+          security: [{ bearerAuth: [] }],
+          response: {
+            201: z.object({
+              users: z.array(
+                z.object({
+                  id: uuid(),
+                  name: z.string(),
+                  email: z.email(),
+                  role: userRoleSchema,
+                }),
+              ),
+            }),
+          },
         },
       },
-    },
-    getUsersControllers,
-  )
+      getUsersControllers,
+    )
 }
 
 export async function appProfileUserRoutes(app: FastifyInstance) {
