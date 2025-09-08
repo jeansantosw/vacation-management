@@ -8,6 +8,20 @@
       "when": 1757203993378,
       "tag": "0000_jazzy_turbo",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1757362724480,
+      "tag": "0001_first_rick_jones",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1757363324248,
+      "tag": "0002_freezing_liz_osborn",
+      "breakpoints": true
     }
   ]
 }

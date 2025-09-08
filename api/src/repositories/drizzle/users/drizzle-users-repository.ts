@@ -27,6 +27,7 @@ export class DrizzleUsersRepository implements UserRepository {
   }
 
   async create(data: TUsersInsert) {
+    console.log('#### DATA ####: ', data)
     const [user] = await db.insert(users).values(data).returning()
 
     return user

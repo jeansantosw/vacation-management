@@ -6,6 +6,7 @@ export const createUserControllerSchema = z.object({
   password: z.string().min(6).max(16),
   name: z.string(),
   role: userRoleSchema,
+  managerId: z.uuid(),
 })
 
 export const authenticateUserControllerSchema = z.object({

@@ -33,23 +33,27 @@ export async function appAuthenticateUsersRoutes(app: FastifyInstance) {
 }
 
 export async function appCreateUsersRoutes(app: FastifyInstance) {
-  app.post(
-    '/users',
-    {
-      schema: {
-        tags: ['Users'],
-        summary: 'Create a user',
-        description: 'This route only creates application users.',
-        body: createUserControllerSchema,
-        response: {
-          201: z.object({
-            userId: z.uuid(),
-          }),
+  app
+    .withTypeProvider<ZodTypeProvider>()
+    .register(auth)
+    .post(
+      '/users',
+      {
+        schema: {
+          tags: ['Users'],
+          summary: 'Create a user',
+          description: 'This route only creates application users.',
+          security: [{ bearerAuth: [] }],
+          body: createUserControllerSchema,
+          response: {
+            201: z.object({
+              userId: z.uuid(),
+            }),
+          },
         },
       },
-    },
-    createUsersControllers,
-  )
+      createUsersControllers,
+    )
 }
 
 export async function appGetUsersRoutes(app: FastifyInstance) {
