@@ -5,6 +5,14 @@ export interface IAuthenticateUsersUsecaseRequest {
   password: string
 }
 
-export interface IAuthenticateUsersUsecaseReponse {
+export interface IAuthenticateUsersUsecaseResponse {
+  user: TUserSelect
+}
+
+export interface IGetUserProfileUsecaseUsecaseRequest {
+  userId: string
+}
+
+export interface IGetUserProfileUsecaseUsecaseResponse {
   user: TUserSelect
 }
