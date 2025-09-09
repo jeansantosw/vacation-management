@@ -1,24 +1,30 @@
 import type { UserRepository } from '@/repositories/drizzle/users/users-repository'
-import type { IGetUserUsecaseRequest, IGetUserUsecaseResponse } from './types'
+import type {
+  IGetUserDetailsUsecaseRequest,
+  IGetUserDetailsUsecaseResponse,
+} from './types'
 import { NotFoundError } from '@/helpers/_errors/not-found-error'
 import { UnauthorizedError } from '@/helpers/_errors/unauthorized-error'
 
-export class GetUserUsecase {
+export class GetUserDetailsUsecase {
   constructor(private userRepository: UserRepository) {}
 
   async execute({
-    currentUserId,
+    users,
     userId,
-  }: IGetUserUsecaseRequest): Promise<IGetUserUsecaseResponse> {
-    if (!currentUserId) {
+  }: IGetUserDetailsUsecaseRequest): Promise<IGetUserDetailsUsecaseResponse> {
+    if (!users) {
       throw new UnauthorizedError()
     }
-    const user = await this.userRepository.findByUserId(userId)
 
-    if (!user) {
+    const userIdFound = users.find((user) => {
+      return user.id === userId
+    })
+
+    if (!userIdFound) {
       throw new NotFoundError('User not found.')
     }
 
-    return { user }
+    return { user: userIdFound }
   }
 }

@@ -22,7 +22,13 @@ export class DrizzleUsersRepository implements UserRepository {
 
   async findManyUser() {
     const user = await db
-      .select({ name: users.name, email: users.email, role: users.role })
+      .select({
+        id: users.id,
+        name: users.name,
+        email: users.email,
+        role: users.role,
+        managerId: users.managerId,
+      })
       .from(users)
 
     return user
@@ -30,7 +36,13 @@ export class DrizzleUsersRepository implements UserRepository {
 
   async findManyByManagerId(userId: string) {
     const user = await db
-      .select({ name: users.name, email: users.email, role: users.role })
+      .select({
+        id: users.id,
+        name: users.name,
+        email: users.email,
+        role: users.role,
+        managerId: users.managerId,
+      })
       .from(users)
       .where(eq(users.managerId, userId))
 

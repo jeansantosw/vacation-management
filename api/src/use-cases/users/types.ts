@@ -1,9 +1,5 @@
 import type { TUserSelect } from '@/helpers/global-types/drizzle-types'
-import type {
-  IGetUsersBasic,
-  IUser,
-  TUserRoles,
-} from '@/helpers/global-types/types'
+import type { IGetUsersBasic, TUserRoles } from '@/helpers/global-types/types'
 
 // Interface authenticate
 export interface IAuthenticateUsersUsecaseRequest {
@@ -26,7 +22,7 @@ export interface IGetUserProfileUsecaseResponse {
 
 //  Interface get users
 export interface IGetUsersUsecaseRequest {
-  userId: string
+  currentUserId: string
 }
 
 export interface IGetUsersUsecaseResponse {
@@ -44,11 +40,11 @@ export interface ICreateUsersUsecaseRequest {
 }
 
 // Interface get user
-export interface IGetUserUsecaseRequest {
-  currentUserId: string
+export interface IGetUserDetailsUsecaseRequest {
+  users: IGetUsersBasic[]
   userId: string
 }
 
-export interface IGetUserUsecaseResponse {
-  user: IUser
+export interface IGetUserDetailsUsecaseResponse {
+  user: IGetUsersBasic
 }

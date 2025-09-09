@@ -3,6 +3,8 @@ import { UnauthorizedError } from '@/helpers/_errors/unauthorized-error'
 import { ResourceNotExistsError } from '@/use-cases/users/errors/resource-not-exists-error'
 import type { GetUserParams } from './types'
 import { makeGetUserUseCase } from '@/use-cases/factories/make-get-user-usecase'
+import { NotFoundError } from '@/helpers/_errors/not-found-error'
+// import { makeGetUsersUseCase } from '@/use-cases/factories/make-get-users-usecase'
 
 export async function getUserControllers(
   request: FastifyRequest<{ Params: GetUserParams }>,
@@ -12,10 +14,16 @@ export async function getUserControllers(
 
   const userId = request.params.id
   try {
-    const getUserUseCase = makeGetUserUseCase()
+    const { getUsersUseCase, getUserDetailsUsecase } = makeGetUserUseCase()
 
-    const user = await getUserUseCase.execute({
+    // const getUsersUseCase = makeGetUsersUseCase()
+
+    const { users } = await getUsersUseCase.execute({
       currentUserId,
+    })
+
+    const user = await getUserDetailsUsecase.execute({
+      users,
       userId,
     })
 
@@ -27,6 +35,11 @@ export async function getUserControllers(
       })
     }
     if (error instanceof ResourceNotExistsError) {
+      return reply.status(404).send({
+        message: error.message,
+      })
+    }
+    if (error instanceof NotFoundError) {
       return reply.status(404).send({
         message: error.message,
       })

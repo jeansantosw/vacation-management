@@ -8,9 +8,9 @@ export class GetUsersUsecase {
   constructor(private userRepository: UserRepository) {}
 
   async execute({
-    userId,
+    currentUserId,
   }: IGetUsersUsecaseRequest): Promise<IGetUsersUsecaseResponse> {
-    const user = await this.userRepository.findByUserId(userId)
+    const user = await this.userRepository.findByUserId(currentUserId)
 
     if (!user) {
       throw new NotFoundError('User not found.')

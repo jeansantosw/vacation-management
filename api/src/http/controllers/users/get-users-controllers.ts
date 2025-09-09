@@ -7,12 +7,12 @@ export async function getUsersControllers(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
-  const userId = await request.getCurrentUserId()
+  const currentUserId = await request.getCurrentUserId()
   try {
     const getUsersUseCase = makeGetUsersUseCase()
 
     const result = await getUsersUseCase.execute({
-      userId,
+      currentUserId,
     })
 
     return reply.send({ users: result })
