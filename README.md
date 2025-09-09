@@ -23,7 +23,7 @@ Se não implementado, os usuários podem ser **hardcoded** e selecionados de for
 ## 📋 Requisitos Principais
 
 ### 👥 Colaboradores
-- [ ] Criar-[OK], listar-[OK], obter detalhes, editar e remover colaboradores.  
+- [ ] Criar-[OK], listar-[OK], obter detalhes-[ok], editar e remover colaboradores.  
 - [x] Cada colaborador deve estar associado a um **manager**.  
 - [-] Apenas **admins** podem criar e gerenciar usuários.  
 - [ ] **Managers** não podem criar usuários, apenas gerenciar férias de seus colaboradores.  

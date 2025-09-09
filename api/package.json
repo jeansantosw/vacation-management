@@ -9,6 +9,7 @@
     "build": "tsup src --out-dir build",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
+    "db:seed": "tsx src/database/seed.ts",
     "db:studio": "drizzle-kit studio"
   },
   "keywords": [],
@@ -16,6 +17,7 @@
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
+    "@faker-js/faker": "10.0.0",
     "@rocketseat/eslint-config": "2.2.2",
     "@types/node": "24.3.1",
     "drizzle-kit": "0.31.4",
