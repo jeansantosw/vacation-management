@@ -11,6 +11,7 @@ import { userRoleSchema } from '@/helpers/global-types/types'
 import { profileUsersControllers } from './profile-user-controllers'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { auth } from '@/http/middlewares/auth'
+import { getUserControllers } from './get-user-controllers'
 
 export async function appAuthenticateUsersRoutes(app: FastifyInstance) {
   app.post(
@@ -102,5 +103,37 @@ export async function appProfileUserRoutes(app: FastifyInstance) {
         },
       },
       profileUsersControllers,
+    )
+}
+
+export async function appGetUserRoutes(app: FastifyInstance) {
+  app
+    .withTypeProvider<ZodTypeProvider>()
+    .register(auth)
+    .get(
+      '/user/:id',
+      {
+        schema: {
+          tags: ['Users'],
+          summary: 'Get user by id',
+          description: '',
+          security: [{ bearerAuth: [] }],
+          params: z.object({
+            id: z.uuid(),
+          }),
+          response: {
+            200: z.object({
+              user: z.object({
+                id: uuid(),
+                managerId: uuid().nullable(),
+                name: z.string(),
+                email: z.email(),
+                role: userRoleSchema,
+              }),
+            }),
+          },
+        },
+      },
+      getUserControllers,
     )
 }

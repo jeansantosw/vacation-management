@@ -6,7 +6,16 @@ import type { UserRepository } from './users-repository'
 
 export class DrizzleUsersRepository implements UserRepository {
   async findByUserId(id: string) {
-    const [user] = await db.select().from(users).where(eq(users.id, id))
+    const [user] = await db
+      .select({
+        id: users.id,
+        email: users.email,
+        name: users.name,
+        role: users.role,
+        managerId: users.managerId,
+      })
+      .from(users)
+      .where(eq(users.id, id))
 
     return user
   }

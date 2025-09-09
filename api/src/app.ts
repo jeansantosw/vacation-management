@@ -2,6 +2,7 @@ import fastify from 'fastify'
 import {
   appAuthenticateUsersRoutes,
   appCreateUsersRoutes,
+  appGetUserRoutes,
   appGetUsersRoutes,
   appProfileUserRoutes,
 } from './http/controllers/users/routes'
@@ -72,6 +73,7 @@ server.register(appAuthenticateUsersRoutes)
 server.register(appProfileUserRoutes)
 server.register(appCreateUsersRoutes)
 server.register(appGetUsersRoutes)
+server.register(appGetUserRoutes)
 
 server.setErrorHandler((error, _request, reply) => {
   if (error instanceof ZodError) {

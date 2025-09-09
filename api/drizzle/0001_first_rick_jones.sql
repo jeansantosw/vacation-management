@@ -1,1 +1,0 @@
-DROP INDEX "users_managerId_id_index";

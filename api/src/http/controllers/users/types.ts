@@ -17,3 +17,9 @@ export const authenticateUserControllerSchema = z.object({
 export const getUsersControllersSchema = z.object({
   userId: z.string(),
 })
+
+export const getUserParamsSchema = z.object({
+  id: z.uuid(),
+})
+
+export type GetUserParams = z.infer<typeof getUserParamsSchema>
