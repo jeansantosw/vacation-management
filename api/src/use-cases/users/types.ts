@@ -17,7 +17,7 @@ export interface IGetUserProfileUsecaseRequest {
 }
 
 export interface IGetUserProfileUsecaseResponse {
-  user: TUserSelect
+  user: IGetUsersBasic
 }
 
 //  Interface get users
@@ -35,7 +35,7 @@ export interface ICreateUsersUsecaseRequest {
   password: string
   name: string
   role: TUserRoles
-  managerId: string
+  managerId: string | null
   userId: string
 }
 
@@ -47,4 +47,31 @@ export interface IGetUserDetailsUsecaseRequest {
 
 export interface IGetUserDetailsUsecaseResponse {
   user: IGetUsersBasic
+}
+
+// Interface update user
+export interface IUpdateUseCaseRequest {
+  id?: string
+  email?: string
+  name?: string
+  role?: TUserRoles
+  managerId?: string | null
+}
+
+// Request do use case
+export interface IUpdateUserUseCaseRequest {
+  user: IGetUsersBasic
+  email?: string
+  name?: string
+  role?: TUserRoles
+  managerId?: string | null
+}
+
+// Response do use case
+export interface IUpdateUserUseCaseResponse {
+  id: string
+  email?: string
+  name?: string
+  role?: TUserRoles
+  managerId?: string | null
 }

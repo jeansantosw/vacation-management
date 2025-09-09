@@ -15,12 +15,6 @@ export async function profileUsersControllers(
 
   // Refatorar o retorno de dados do usuario
   return reply.status(200).send({
-    user: {
-      ...user,
-      password: undefined,
-      managerId: undefined,
-      createdAt: undefined,
-      updatedAt: undefined,
-    },
+    user,
   })
 }

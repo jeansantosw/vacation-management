@@ -4,6 +4,7 @@ import z, { uuid } from 'zod'
 import {
   authenticateUserControllerSchema,
   createUserControllerSchema,
+  updateUserControllerSchema,
 } from './types'
 import { createUsersControllers } from './create-users-controllers'
 import { authenticateUsersControllers } from './authenticate-users-controllers'
@@ -12,6 +13,7 @@ import { profileUsersControllers } from './profile-user-controllers'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { auth } from '@/http/middlewares/auth'
 import { getUserControllers } from './get-user-controllers'
+import { updateUserControllers } from './update-user-controllers'
 
 export async function appAuthenticateUsersRoutes(app: FastifyInstance) {
   app.post(
@@ -20,7 +22,6 @@ export async function appAuthenticateUsersRoutes(app: FastifyInstance) {
       schema: {
         tags: ['Users'],
         summary: 'Sessions user',
-        description: '',
         body: authenticateUserControllerSchema,
         response: {
           200: z.object({
@@ -97,7 +98,7 @@ export async function appProfileUserRoutes(app: FastifyInstance) {
         schema: {
           tags: ['Users'],
           summary: 'Return profile user',
-          description: '',
+          description: 'This route returns authenticated user data.',
           security: [{ bearerAuth: [] }],
           response: 200,
         },
@@ -135,5 +136,38 @@ export async function appGetUserRoutes(app: FastifyInstance) {
         },
       },
       getUserControllers,
+    )
+}
+
+export async function appUpdateUserRoutes(app: FastifyInstance) {
+  app
+    .withTypeProvider<ZodTypeProvider>()
+    .register(auth)
+    .put(
+      '/user/:id',
+      {
+        schema: {
+          tags: ['Users'],
+          summary: 'Update user based on ID',
+          description: '',
+          security: [{ bearerAuth: [] }],
+          params: z.object({
+            id: z.uuid(),
+          }),
+          body: updateUserControllerSchema,
+          response: {
+            204: z.object({
+              user: z.object({
+                id: uuid(),
+                managerId: uuid().nullable(),
+                name: z.string(),
+                email: z.email(),
+                role: userRoleSchema,
+              }),
+            }),
+          },
+        },
+      },
+      updateUserControllers,
     )
 }

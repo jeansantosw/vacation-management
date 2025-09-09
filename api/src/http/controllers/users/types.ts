@@ -23,3 +23,10 @@ export const getUserParamsSchema = z.object({
 })
 
 export type GetUserParams = z.infer<typeof getUserParamsSchema>
+
+export const updateUserControllerSchema = z.object({
+  email: z.email().optional(),
+  name: z.string().optional(),
+  role: userRoleSchema.default('collaborator').optional(),
+  managerId: z.string().nullable().optional(),
+})

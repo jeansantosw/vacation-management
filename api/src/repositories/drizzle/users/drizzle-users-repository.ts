@@ -3,8 +3,26 @@ import { eq } from 'drizzle-orm'
 import { users } from '@/database/schema'
 import type { TUsersInsert } from '@/helpers/global-types/drizzle-types'
 import type { UserRepository } from './users-repository'
+// import type { IGetUsersBasic } from '@/helpers/global-types/types'
+import type { IUpdateUseCase } from './types'
 
 export class DrizzleUsersRepository implements UserRepository {
+  async findByIdToUpdateUser(userId: string, userUpdate: IUpdateUseCase) {
+    const [user] = await db
+      .update(users)
+      .set(userUpdate)
+      .where(eq(users.id, userId))
+      .returning({
+        id: users.id,
+        name: users.name,
+        email: users.email,
+        role: users.role,
+        managerId: users.managerId,
+      })
+
+    return user
+  }
+
   async findByUserId(id: string) {
     const [user] = await db
       .select({

@@ -5,6 +5,7 @@ import {
   appGetUserRoutes,
   appGetUsersRoutes,
   appProfileUserRoutes,
+  appUpdateUserRoutes,
 } from './http/controllers/users/routes'
 import {
   jsonSchemaTransform,
@@ -74,6 +75,7 @@ server.register(appProfileUserRoutes)
 server.register(appCreateUsersRoutes)
 server.register(appGetUsersRoutes)
 server.register(appGetUserRoutes)
+server.register(appUpdateUserRoutes)
 
 server.setErrorHandler((error, _request, reply) => {
   if (error instanceof ZodError) {
