@@ -8,7 +8,7 @@ O sistema garante que **não existam férias sobrepostas** e implementa regras d
 ## 🚀 Objetivos do Exercício
 
 - [x] Gerir colaboradores.  
-- [ ] Gerir pedidos de férias.  
+- [x] Gerir pedidos de férias.  
 - [ ] Garantir que não existam férias sobrepostas entre colaboradores (ou seja, dois ou mais colaboradores não podem estar de férias no mesmo dia).  
 - [x] Diferenciar roles de usuário:
   - [OK] **Admin**: pode criar usuários-[ok] e gerenciar todas as férias.  
@@ -32,11 +32,11 @@ Se não implementado, os usuários podem ser **hardcoded** e selecionados de for
 - [ ] Criar, listar, obter detalhes, editar e cancelar pedidos de férias.  
 - [ ] Validar que não existam **férias sobrepostas** (mesmo período) entre colaboradores.  
 - [ ] Considerar **datas inclusivas** (ex.: 01/08 a 05/08 inclui os 5 dias).  
-- [ ] Cada pedido deve ter um **status**: `pendente`, `aprovado`, `rejeitado`.  
-- [ ] Pedidos são aprovados/rejeitados pelo **manager responsável** ou pelo **admin**.  
+- [x] Cada pedido deve ter um **status**: `pendente`, `aprovado`, `rejeitado`.  
+- [x] Pedidos são aprovados/rejeitados pelo **manager responsável** ou pelo **admin**.  
 - [ ] **Colaboradores** só podem ver e criar seus próprios pedidos.  
 - [ ] **Managers** só podem aprovar/rejeitar pedidos de seus colaboradores.  
-- [ ] **Admins** podem ver e gerenciar tudo.  
+- [x] **Admins** podem ver e gerenciar tudo.  
 
 ---
 
