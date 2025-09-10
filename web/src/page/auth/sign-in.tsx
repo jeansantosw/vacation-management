@@ -1,9 +1,9 @@
-// import { useMutation } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 
-// import { signIn } from '@/api/http/services/auth/sign-in'
+import { signIn } from '@/api/users-api/sign-in'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -23,14 +23,13 @@ export function SignIn() {
     },
   })
 
-  // const { mutateAsync: authenticate } = useMutation({
-  //   mutationFn: signIn,
-  // })
+  const { mutateAsync: authenticateFn } = useMutation({
+    mutationFn: signIn,
+  })
 
   async function handleSignin({ email, password }: TSigninForm) {
     try {
-      console.log('####: ', email, password)
-      // await authenticate({ email })
+      await authenticateFn({ email, password })
       toast.success('Login bem-sucedido 🔓')
 
       // await new Promise((resolve) => setTimeout(resolve, 4000)) // Apenas para simular o tempo de envio do email
