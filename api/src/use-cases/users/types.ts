@@ -75,3 +75,8 @@ export interface IUpdateUserUseCaseResponse {
   role?: TUserRoles
   managerId?: string | null
 }
+
+export interface IDeleteUserUseCase {
+  currentUserId: string
+  userId: string
+}

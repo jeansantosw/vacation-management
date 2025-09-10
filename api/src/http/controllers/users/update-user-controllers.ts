@@ -40,7 +40,7 @@ export async function updateUserControllers(
       managerId,
     })
 
-    return reply.status(204).send({ user: updatedUser })
+    return reply.status(200).send({ user: updatedUser })
   } catch (error) {
     if (error instanceof UnauthorizedError) {
       return reply.status(401).send({

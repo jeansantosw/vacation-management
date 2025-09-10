@@ -14,6 +14,7 @@ import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { auth } from '@/http/middlewares/auth'
 import { getUserControllers } from './get-user-controllers'
 import { updateUserControllers } from './update-user-controllers'
+import { deleteUserControllers } from './delete-user-controllers'
 
 export async function appAuthenticateUsersRoutes(app: FastifyInstance) {
   app.post(
@@ -156,7 +157,7 @@ export async function appUpdateUserRoutes(app: FastifyInstance) {
           }),
           body: updateUserControllerSchema,
           response: {
-            204: z.object({
+            200: z.object({
               user: z.object({
                 id: uuid(),
                 managerId: uuid().nullable(),
@@ -169,5 +170,27 @@ export async function appUpdateUserRoutes(app: FastifyInstance) {
         },
       },
       updateUserControllers,
+    )
+}
+
+export async function appDeleteUserRoutes(app: FastifyInstance) {
+  app
+    .withTypeProvider<ZodTypeProvider>()
+    .register(auth)
+    .delete(
+      '/user/:id',
+      {
+        schema: {
+          tags: ['Users'],
+          summary: 'Delete user based on ID',
+          description: '',
+          security: [{ bearerAuth: [] }],
+          params: z.object({
+            id: z.uuid(),
+          }),
+          response: 204,
+        },
+      },
+      deleteUserControllers,
     )
 }

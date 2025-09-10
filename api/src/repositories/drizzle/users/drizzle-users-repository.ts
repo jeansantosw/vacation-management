@@ -7,6 +7,10 @@ import type { UserRepository } from './users-repository'
 import type { IUpdateUseCase } from './types'
 
 export class DrizzleUsersRepository implements UserRepository {
+  async findByUserIdForShutdown(userId: string) {
+    await db.delete(users).where(eq(users.id, userId))
+  }
+
   async findByIdToUpdateUser(userId: string, userUpdate: IUpdateUseCase) {
     const [user] = await db
       .update(users)

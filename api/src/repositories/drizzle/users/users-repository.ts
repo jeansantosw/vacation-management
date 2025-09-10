@@ -14,6 +14,7 @@ export interface UserRepository {
     userId: string,
     userUpdate: IUpdateUseCase,
   ): Promise<IGetUsersBasic>
+  findByUserIdForShutdown(userId: string): Promise<void>
   findByEmail(email: string): Promise<TUserSelect | null>
   create(data: TUsersInsert): Promise<TUserSelect>
 }
