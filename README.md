@@ -7,12 +7,12 @@ O sistema garante que **não existam férias sobrepostas** e implementa regras d
 
 ## 🚀 Objetivos do Exercício
 
-- [ ] Gerir colaboradores.  
+- [x] Gerir colaboradores.  
 - [ ] Gerir pedidos de férias.  
 - [ ] Garantir que não existam férias sobrepostas entre colaboradores (ou seja, dois ou mais colaboradores não podem estar de férias no mesmo dia).  
-- [ ] Diferenciar roles de usuário:
-  - [ ] **Admin**: pode criar usuários e gerenciar todas as férias.  
-  - [ ] **Manager**: gerencia um conjunto de colaboradores; pode aprovar ou rejeitar férias apenas de seus colaboradores.  
+- [x] Diferenciar roles de usuário:
+  - [-] **Admin**: pode criar usuários-[ok] e gerenciar todas as férias.  
+  - [-] **Manager**: gerencia um conjunto de colaboradores-[ok]; pode aprovar ou rejeitar férias apenas de seus colaboradores.  
   - [ ] **Collaborator**: pode criar e gerenciar apenas seus próprios pedidos de férias.  
 
 > 🔐 Implementar login/autenticação é **opcional**.  
@@ -23,10 +23,10 @@ Se não implementado, os usuários podem ser **hardcoded** e selecionados de for
 ## 📋 Requisitos Principais
 
 ### 👥 Colaboradores
-- [ ] Criar-[OK], listar-[OK], obter detalhes-[ok], editar e remover colaboradores.  
+- [x] Criar-[OK], listar-[OK], obter detalhes-[OK], editar-[OK] e remover colaboradores-[OK].  
 - [x] Cada colaborador deve estar associado a um **manager**.  
-- [-] Apenas **admins** podem criar e gerenciar usuários.  
-- [ ] **Managers** não podem criar usuários, apenas gerenciar férias de seus colaboradores.  
+- [x] Apenas **admins** podem criar e gerenciar usuários.  
+- [x] **Managers** não podem criar usuários, apenas gerenciar férias de seus colaboradores.  
 
 ### 📅 Pedidos de Férias
 - [ ] Criar, listar, obter detalhes, editar e cancelar pedidos de férias.  
@@ -42,7 +42,7 @@ Se não implementado, os usuários podem ser **hardcoded** e selecionados de for
 
 ## ⭐ Bônus (opcional)
 
-- [ ] Implementar login/autenticação.  
+- [x] Implementar login/autenticação.  
 - [ ] Paginação e filtros para listagem de colaboradores e pedidos de férias.  
 - [ ] Visualização em calendário dos períodos de férias.  
 
