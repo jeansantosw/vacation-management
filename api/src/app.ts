@@ -20,6 +20,7 @@ import fastifySwagger from '@fastify/swagger'
 import fastifySwaggerUi from '@fastify/swagger-ui'
 import z, { ZodError } from 'zod'
 import fastifyJwt from '@fastify/jwt'
+import fastifyCors from '@fastify/cors'
 
 export const server = fastify({
   logger: {
@@ -70,6 +71,11 @@ if (env.NODE_ENV === 'development') {
   // })
 }
 
+server.register(fastifyCors, {
+  origin: ['http://localhost:5173'], // seu frontend (vite/react)
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // libera só o necessário
+  credentials: true,
+})
 // User routes
 server.register(appAuthenticateUsersRoutes)
 server.register(appProfileUserRoutes)

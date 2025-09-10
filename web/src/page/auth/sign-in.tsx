@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 
 import { signIn } from '@/api/users-api/sign-in'
@@ -11,7 +11,7 @@ import { Label } from '@/components/ui/label'
 import type { TSigninForm } from './types'
 
 export function SignIn() {
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const {
     register,
@@ -31,9 +31,8 @@ export function SignIn() {
     try {
       await authenticateFn({ email, password })
       toast.success('Login bem-sucedido 🔓')
+      navigate('/')
 
-      // await new Promise((resolve) => setTimeout(resolve, 4000)) // Apenas para simular o tempo de envio do email
-      // navigate('/')
     } catch {
       toast.error('Credenciais inválidas ❌')
     }
@@ -75,9 +74,6 @@ export function SignIn() {
           <Button disabled={isSubmitting} className="mt-2 w-full" type="submit">
             Acessar painel
           </Button>
-          {/* <Button asChild className="w-full" variant="link">
-            <Link to="/sign-up">Cadastrar novo estabelecimento</Link>
-          </Button> */}
         </form>
       </div>
     </div>

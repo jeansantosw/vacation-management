@@ -6,13 +6,23 @@ import { NotFound } from '@/page/404'
 import { Dashboard } from '@/page/app/dashboard'
 import { SignIn } from '@/page/auth/sign-in'
 import { Error } from '@/page/error'
+import { PrivateRoute } from '@/auth/private-router'
 
 export const routes = createBrowserRouter([
   {
     path: '/',
     element: <AppLayout />,
     errorElement: <Error />,
-    children: [{ path: '/', element: <Dashboard /> }],
+    children: [
+      {
+        path: '/',
+        element: (
+          <PrivateRoute>
+            <Dashboard />
+          </PrivateRoute>
+        ),
+      },
+    ],
   },
   {
     path: '/',

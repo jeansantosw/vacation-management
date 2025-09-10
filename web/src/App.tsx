@@ -4,11 +4,15 @@ import { Toaster } from 'sonner'
 
 import { queryClient } from './api/react-query'
 import { routes } from './router/routes'
+import { AuthProvider } from '@/context/auth-context'
+
 export function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <Toaster richColors />
-      <RouterProvider router={routes} />
+      <AuthProvider>
+        <Toaster richColors />
+        <RouterProvider router={routes} />
+      </AuthProvider>
     </QueryClientProvider>
   )
 }
