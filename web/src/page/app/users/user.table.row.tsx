@@ -5,7 +5,6 @@ import { TableCell, TableRow } from '@/components/ui/table'
 import type { IUserTableRow } from './types'
 
 export function UserTableRow({ user }: IUserTableRow) {
-  // Corrigindo para usar os dados do objeto 'user'
   return (
     <TableRow>
       <TableCell>

@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 
 import { signIn } from '@/api/users-api/sign-in'
@@ -11,7 +11,6 @@ import { Label } from '@/components/ui/label'
 import type { TSigninForm } from './types'
 
 export function SignIn() {
-  const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const {
     register,
@@ -31,7 +30,7 @@ export function SignIn() {
     try {
       await authenticateFn({ email, password })
       toast.success('Login bem-sucedido 🔓')
-      navigate('/')
+      window.location.href = '/'
 
     } catch {
       toast.error('Credenciais inválidas ❌')
