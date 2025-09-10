@@ -67,6 +67,19 @@ npm run start:web:dev
   - **Backend (API):** `http://localhost:3333`
   - **Backend (API):** `http://localhost:3333/docs` - Para consultar a documentação 
 
+
+```bash
+
+- email: joao@example.com
+- password: 123456
+- role: ADMIN
+
+- email: sara@example.com
+- password: 123456
+- role: MANAGER
+```
+
+
 ## Comandos Úteis do Docker
 
 Aqui estão alguns comandos `docker-compose` que podem ajudar no seu dia a dia:
