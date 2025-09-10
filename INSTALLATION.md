@@ -50,9 +50,14 @@ O flag `-d` executa os contêineres em segundo plano. Se você quiser ver os log
 Uma vez que os contêineres estiverem rodando, você precisa executar as migrações para configurar o banco de dados.
 
 ```bash
+cd api
 npm run db:generate
 npm run db:migrate
 npm run db:seed
+npm run start:api:dev
+
+cd web
+npm run start:web:dev
 ```
 
 ## Uso
