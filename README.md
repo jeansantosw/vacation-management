@@ -11,9 +11,9 @@ O sistema garante que **não existam férias sobrepostas** e implementa regras d
 - [ ] Gerir pedidos de férias.  
 - [ ] Garantir que não existam férias sobrepostas entre colaboradores (ou seja, dois ou mais colaboradores não podem estar de férias no mesmo dia).  
 - [x] Diferenciar roles de usuário:
-  - [-] **Admin**: pode criar usuários-[ok] e gerenciar todas as férias.  
-  - [-] **Manager**: gerencia um conjunto de colaboradores-[ok]; pode aprovar ou rejeitar férias apenas de seus colaboradores.  
-  - [-] **Collaborator**: pode criar e gerenciar apenas seus próprios pedidos de férias.  
+  - [OK] **Admin**: pode criar usuários-[ok] e gerenciar todas as férias.  
+  - [OK] **Manager**: gerencia um conjunto de colaboradores-[ok]; pode aprovar ou rejeitar férias apenas de seus colaboradores.  
+  - [OK] **Collaborator**: pode criar e gerenciar apenas seus próprios pedidos de férias.  
 
 > 🔐 Implementar login/autenticação é **opcional**.  
 Se não implementado, os usuários podem ser **hardcoded** e selecionados de forma simples para simular o usuário logado (ex.: dropdown ou seleção no front-end).
