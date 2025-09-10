@@ -2,8 +2,10 @@ import { Search, UserRoundPen, UserRoundX } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { TableCell, TableRow } from '@/components/ui/table'
+import type { IUserTableRow } from './types'
 
-export function UserTableRow() {
+export function UserTableRow({ user }: IUserTableRow) {
+  // Corrigindo para usar os dados do objeto 'user'
   return (
     <TableRow>
       <TableCell>
@@ -13,11 +15,11 @@ export function UserTableRow() {
         </Button>
       </TableCell>
       <TableCell className="font-mono text-xs font-medium">
-        823ue2e82u8ed289ued2ue9
+        {user.id}
       </TableCell>
-      <TableCell>sara@arvox.com</TableCell>
-      <TableCell>Sara Souza</TableCell>
-      <TableCell>admin</TableCell>
+      <TableCell>{user.email}</TableCell>
+      <TableCell>{user.name}</TableCell>
+      <TableCell>{user.role}</TableCell>
       <TableCell>
         <div className="flex items-center gap-2">
           <span className="h-2 w-2 rounded-full bg-neutral-800" />
