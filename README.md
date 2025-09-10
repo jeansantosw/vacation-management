@@ -13,7 +13,7 @@ O sistema garante que **não existam férias sobrepostas** e implementa regras d
 - [x] Diferenciar roles de usuário:
   - [-] **Admin**: pode criar usuários-[ok] e gerenciar todas as férias.  
   - [-] **Manager**: gerencia um conjunto de colaboradores-[ok]; pode aprovar ou rejeitar férias apenas de seus colaboradores.  
-  - [ ] **Collaborator**: pode criar e gerenciar apenas seus próprios pedidos de férias.  
+  - [-] **Collaborator**: pode criar e gerenciar apenas seus próprios pedidos de férias.  
 
 > 🔐 Implementar login/autenticação é **opcional**.  
 Se não implementado, os usuários podem ser **hardcoded** e selecionados de forma simples para simular o usuário logado (ex.: dropdown ou seleção no front-end).
@@ -51,12 +51,34 @@ Se não implementado, os usuários podem ser **hardcoded** e selecionados de for
 ## 📌 Estrutura de Roles
 
 | Role          | Permissões                                                                 |
-|---------------|----------------------------------------------------------------------------|
-| **Admin**     | Criar/editar/remover usuários e gerenciar todas as férias.                 |
-| **Manager**   | Aprovar/rejeitar férias apenas de seus colaboradores.                      |
-| **Colaborador** | Criar e gerenciar apenas seus próprios pedidos de férias.                 |
+|-----------------|----------------------------------------------------------------------------|
+| **Admin**       | [OK] Criar/editar/remover usuários e gerenciar todas as férias.                 |
+| **Manager**     | [OK] Aprovar/rejeitar férias apenas de seus colaboradores.                      |
+| **Colaborador** | [  ] Criar e gerenciar apenas seus próprios pedidos de férias.                 |
 
 ---
 
-## 📦 Como rodar o projeto
+## ROTAS MELHORIAS.
+
+CRIAR:
+
+LISTAR:
+- [ ] - Adicionar paginação e ordenar por ordem:
+      Casos:
+      [ ] - User: ordenar por ordem das roles "ADMIN - MANAGER -COLLABORATOR"
+            cada user dentro deles por ordem alfabertica.
+      [ ] - Férias: ordenar por ordem das roles "ADMIN - MANAGER -COLLABORATOR"
+            cada user dentro deles por ordem alfabertica.
+
+
+LISTAR DETALHES:
+
+
+EDITAR:
+
+
+DELETAR
+- [ ] - Para deletar um manager ele não pode ter colaboradores.
+        [ ] - Antes de deletar é preciso criar a funcionalidade de passar todos
+        os colaboradores dele para outro manager.
 

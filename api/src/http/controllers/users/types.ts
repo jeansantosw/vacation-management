@@ -6,7 +6,7 @@ export const createUserControllerSchema = z.object({
   password: z.string().min(6).max(16),
   name: z.string(),
   role: userRoleSchema.default('collaborator'),
-  managerId: z.string().nullable(),
+  managerId: z.uuid().nullable().optional(),
 })
 
 export const authenticateUserControllerSchema = z.object({
@@ -27,6 +27,6 @@ export type GetUserParams = z.infer<typeof getUserParamsSchema>
 export const updateUserControllerSchema = z.object({
   email: z.email().optional(),
   name: z.string().optional(),
-  role: userRoleSchema.default('collaborator').optional(),
+  role: userRoleSchema.optional(),
   managerId: z.string().nullable().optional(),
 })

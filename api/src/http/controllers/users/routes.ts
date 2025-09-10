@@ -45,7 +45,8 @@ export async function appCreateUsersRoutes(app: FastifyInstance) {
         schema: {
           tags: ['Users'],
           summary: 'Create a user',
-          description: 'This route only creates application users.',
+          description:
+            'This route only creates application users. ⚠️ Note: the field `managerId` is required if the role is "collaborator".',
           security: [{ bearerAuth: [] }],
           body: createUserControllerSchema,
           response: {
@@ -150,7 +151,8 @@ export async function appUpdateUserRoutes(app: FastifyInstance) {
         schema: {
           tags: ['Users'],
           summary: 'Update user based on ID',
-          description: '',
+          description:
+            'In the update route, pass only the fields that need to be changed. ⚠️ Note: If the role is a `collaborator`, a `manageId` must be passed.',
           security: [{ bearerAuth: [] }],
           params: z.object({
             id: z.uuid(),
@@ -183,7 +185,7 @@ export async function appDeleteUserRoutes(app: FastifyInstance) {
         schema: {
           tags: ['Users'],
           summary: 'Delete user based on ID',
-          description: '',
+          description: 'Only administrators can delete users',
           security: [{ bearerAuth: [] }],
           params: z.object({
             id: z.uuid(),

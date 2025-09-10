@@ -19,13 +19,19 @@ export class UpdateUserUseCase {
       throw new NotFoundError('User not found.')
     }
 
+    if (role === 'collaborator') {
+      if (!managerId) {
+        throw new NotFoundError('An employee must have a manager.')
+      }
+    }
+
     const updatedUser = await this.userRepository.findByIdToUpdateUser(
       user.id,
       {
         email,
         name,
         role,
-        managerId,
+        managerId: null,
       },
     )
 
