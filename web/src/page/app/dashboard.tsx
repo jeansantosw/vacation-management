@@ -1,3 +1,9 @@
+import { Users } from './users/users'
+
 export function Dashboard() {
-  return <h1>Dashboard</h1>
+  return (
+    <>
+      <Users />
+    </>
+  )
 }
