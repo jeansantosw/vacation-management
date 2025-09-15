@@ -62,7 +62,6 @@ export function AccountMenu() {
 
           <DropdownMenuItem
             asChild
-
             className="text-rose-500 dark:text-rose-400"
           >
             <button onClick={handleLogout} className="w-full">
