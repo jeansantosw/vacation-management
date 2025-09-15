@@ -22,8 +22,6 @@ export async function updateUserControllers(
     const { getUsersUseCase, getUserDetailsUsecase, updateUserUsecase } =
       makeUpdateUserUseCase()
 
-    // const getUsersUseCase = makeGetUsersUseCase()
-
     const users = await getUsersUseCase.execute(currentUserId)
 
     const user = await getUserDetailsUsecase.execute({

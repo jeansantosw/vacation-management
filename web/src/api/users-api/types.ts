@@ -5,7 +5,7 @@ export interface ISignInBody {
 
 
 export interface IGetUsersBasicResponse {
-  user: {
+  profile: {
   id: string
   email: string
   name: string
