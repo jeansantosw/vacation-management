@@ -14,7 +14,7 @@ export interface IGetUsersBasicResponse {
   }
 }
 
-export interface IUser {
+interface IUser {
   id: string
   email: string
   name: string

@@ -1,8 +1,8 @@
 import { api } from "../axios";
-import type { IUser } from "./types";
+import type { IGetUsersResponse } from "./types";
 
-export async function getUsers(): Promise<IUser[]> {
-  const response = await api.get('/users')
+export async function getUsers() {
+  const { data } = await api.get<IGetUsersResponse>('/users')
 
-  return response.data.users.users 
+  return data.users
 }

@@ -1,4 +1,4 @@
-import { userRoleSchema } from '@/helpers/global-types/types'
+import { userRoleSchema } from '@/helpers/global-types/users-types/types'
 import z from 'zod'
 
 export const createUserControllerSchema = z.object({

@@ -1,4 +1,4 @@
-import type { TUserRoles } from '@/helpers/global-types/types'
+import type { TUserRoles } from '@/helpers/global-types/users-types/types'
 
 export interface IUpdateUseCase {
   email?: string

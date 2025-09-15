@@ -8,7 +8,7 @@ import {
 } from './types'
 import { createUsersControllers } from './create-users-controllers'
 import { authenticateUsersControllers } from './authenticate-users-controllers'
-import { userRoleSchema } from '@/helpers/global-types/types'
+import { userRoleSchema } from '@/helpers/global-types/users-types/types'
 import { profileUsersControllers } from './profile-user-controllers'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { auth } from '@/http/middlewares/auth'
