@@ -1,10 +1,10 @@
 import type { UserRepository } from '@/repositories/drizzle/users/users-repository'
-import { InvalidCredentialsError } from './errors/invalid-credentials-error'
 import { verify } from 'argon2'
 import type {
   IAuthenticateUsersResponseDTO,
   TAuthenticateUserDTO,
 } from '@/helpers/global-types/authenticate-types/types'
+import { InvalidCredentialsError } from '../users/errors/invalid-credentials-error'
 
 export class AuthenticateUsersUsecase {
   constructor(private userRepository: UserRepository) {}
@@ -19,11 +19,12 @@ export class AuthenticateUsersUsecase {
       throw new InvalidCredentialsError()
     }
 
-    const doesPasswordMatches = verify(user.password, password)
+    const doesPasswordMatches = await verify(user.password, password)
 
     if (!doesPasswordMatches) {
       throw new InvalidCredentialsError()
     }
+
     return user
   }
 }

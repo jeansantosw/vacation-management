@@ -1,7 +1,6 @@
 import type { FastifyInstance } from 'fastify'
 import { getUsersControllers } from './get-users-controllers'
 import z, { uuid } from 'zod'
-import { createUserControllerSchema, updateUserControllerSchema } from './types'
 import { createUsersControllers } from './create-users-controllers'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { auth } from '@/http/middlewares/auth'
@@ -9,6 +8,10 @@ import { getUserControllers } from './get-user-controllers'
 import { updateUserControllers } from './update-user-controllers'
 import { deleteUserControllers } from './delete-user-controllers'
 import { userRoleDTOSchema } from '@/helpers/global-types/type'
+import {
+  createUserDTOSchema,
+  updateUserDTOSchema,
+} from '@/helpers/global-types/users-types/types'
 
 // User session
 export async function appCreateUsersRoutes(app: FastifyInstance) {
@@ -24,7 +27,7 @@ export async function appCreateUsersRoutes(app: FastifyInstance) {
           description:
             'This route only creates application users. ⚠️ Note: the field `managerId` is required if the role is "collaborator".',
           security: [{ bearerAuth: [] }],
-          body: createUserControllerSchema,
+          body: createUserDTOSchema,
           response: {
             201: z.object({
               userId: z.uuid(),
@@ -83,10 +86,10 @@ export async function appGetUserRoutes(app: FastifyInstance) {
             200: z.object({
               user: z.object({
                 id: uuid(),
-                managerId: uuid().nullable(),
                 name: z.string(),
                 email: z.email(),
                 role: userRoleDTOSchema,
+                managerId: uuid().nullable(),
               }),
             }),
           },
@@ -112,7 +115,7 @@ export async function appUpdateUserRoutes(app: FastifyInstance) {
           params: z.object({
             id: z.uuid(),
           }),
-          body: updateUserControllerSchema,
+          body: updateUserDTOSchema,
           response: {
             200: z.object({
               user: z.object({

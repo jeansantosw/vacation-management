@@ -1,5 +1,5 @@
 import { DrizzleUsersRepository } from '@/repositories/drizzle/users/drizzle-users-repository'
-import { DeleteUserUseCase } from '../users/delete-user-usecase'
+import { DeleteUserUseCase } from '@/use-cases/users/delete-user-usecase'
 
 export function makeDeleteUserUseCase() {
   const usersRepository = new DrizzleUsersRepository()

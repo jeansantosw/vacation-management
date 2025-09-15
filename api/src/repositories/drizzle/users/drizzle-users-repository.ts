@@ -1,11 +1,13 @@
 import { db } from '@/database/client'
 import { eq } from 'drizzle-orm'
 import { users } from '@/database/schema'
-import type { TUsersInsert } from '@/helpers/global-types/drizzle-types'
 import type { UserRepository } from './users-repository'
-import type { IUpdateUseCase } from './types'
 import type { TUpdateProfile } from '@/helpers/global-types/profile-types/types'
 import type { TCurrentId } from '@/helpers/global-types/type'
+import type {
+  TCreateUserDTO,
+  TUpdateUserDTOS,
+} from '@/helpers/global-types/users-types/types'
 
 export class DrizzleUsersRepository implements UserRepository {
   async findByProfileId(currentId: TCurrentId) {
@@ -34,7 +36,7 @@ export class DrizzleUsersRepository implements UserRepository {
     await db.delete(users).where(eq(users.id, userId))
   }
 
-  async findByIdToUpdateUser(userId: string, userUpdate: IUpdateUseCase) {
+  async findByIdToUpdateUser(userId: string, userUpdate: TUpdateUserDTOS) {
     const [user] = await db
       .update(users)
       .set(userUpdate)
@@ -100,8 +102,15 @@ export class DrizzleUsersRepository implements UserRepository {
     return user
   }
 
-  async create(data: TUsersInsert) {
-    const [user] = await db.insert(users).values(data).returning()
+  async create(data: TCreateUserDTO) {
+    const [user] = await db.insert(users).values(data).returning({
+      id: users.id,
+      email: users.email,
+      password: users.password,
+      name: users.name,
+      role: users.role,
+      managerId: users.managerId,
+    })
 
     return user
   }

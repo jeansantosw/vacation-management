@@ -1,7 +1,7 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
 import { InvalidCredentialsError } from '@/use-cases/users/errors/invalid-credentials-error'
-import { makeAuthenticateUsersUseCase } from '@/use-cases/factories/make-authenticate-users-usecase'
 import { authenticateUserDTOSchema } from '@/helpers/global-types/authenticate-types/types'
+import { makeAuthenticateUsersUseCase } from '@/use-cases/_factories/authenticate/make-authenticate-users-usecase'
 
 export async function authenticateUsersControllers(
   request: FastifyRequest,

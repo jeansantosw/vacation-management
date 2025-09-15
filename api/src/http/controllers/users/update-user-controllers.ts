@@ -1,20 +1,21 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
 import { UnauthorizedError } from '@/helpers/_errors/unauthorized-error'
 import { ResourceNotExistsError } from '@/use-cases/users/errors/resource-not-exists-error'
-import { updateUserControllerSchema, type GetUserParams } from './types'
-// import { makeGetUserUseCase } from '@/use-cases/factories/make-get-user-usecase'
 import { NotFoundError } from '@/helpers/_errors/not-found-error'
-import { makeUpdateUserUseCase } from '@/use-cases/factories/make-update-user-usecase'
-// import { makeGetUsersUseCase } from '@/use-cases/factories/make-get-users-usecase'
+import { makeUpdateUserUseCase } from '@/use-cases/_factories/users/make-update-user-usecase'
+import {
+  updateUserDTOSchema,
+  type TUserParamsDTOS,
+} from '@/helpers/global-types/users-types/types'
 
 export async function updateUserControllers(
-  request: FastifyRequest<{ Params: GetUserParams }>,
+  request: FastifyRequest<{ Params: TUserParamsDTOS }>,
   reply: FastifyReply,
 ) {
   const currentUserId = await request.getCurrentUserId()
 
   const userId = request.params.id
-  const { email, name, role, managerId } = updateUserControllerSchema.parse(
+  const { email, name, role, managerId } = updateUserDTOSchema.parse(
     request.body,
   )
   try {
@@ -23,17 +24,14 @@ export async function updateUserControllers(
 
     // const getUsersUseCase = makeGetUsersUseCase()
 
-    const { users } = await getUsersUseCase.execute({
-      currentUserId,
-    })
+    const users = await getUsersUseCase.execute(currentUserId)
 
-    const { user } = await getUserDetailsUsecase.execute({
+    const user = await getUserDetailsUsecase.execute({
       users,
       userId,
     })
 
-    const updatedUser = await updateUserUsecase.execute({
-      user,
+    const updatedUser = await updateUserUsecase.execute(user, {
       email,
       name,
       role,

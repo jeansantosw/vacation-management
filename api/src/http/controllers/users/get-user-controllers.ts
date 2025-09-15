@@ -1,13 +1,12 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
 import { UnauthorizedError } from '@/helpers/_errors/unauthorized-error'
 import { ResourceNotExistsError } from '@/use-cases/users/errors/resource-not-exists-error'
-import type { GetUserParams } from './types'
-import { makeGetUserUseCase } from '@/use-cases/factories/make-get-user-usecase'
 import { NotFoundError } from '@/helpers/_errors/not-found-error'
-// import { makeGetUsersUseCase } from '@/use-cases/factories/make-get-users-usecase'
+import { makeGetUserUseCase } from '@/use-cases/_factories/users/make-get-user-usecase'
+import type { TUserParamsDTOS } from '@/helpers/global-types/users-types/types'
 
 export async function getUserControllers(
-  request: FastifyRequest<{ Params: GetUserParams }>,
+  request: FastifyRequest<{ Params: TUserParamsDTOS }>,
   reply: FastifyReply,
 ) {
   const currentUserId = await request.getCurrentUserId()
@@ -16,18 +15,14 @@ export async function getUserControllers(
   try {
     const { getUsersUseCase, getUserDetailsUsecase } = makeGetUserUseCase()
 
-    // const getUsersUseCase = makeGetUsersUseCase()
-
-    const { users } = await getUsersUseCase.execute({
-      currentUserId,
-    })
+    const users = await getUsersUseCase.execute(currentUserId)
 
     const user = await getUserDetailsUsecase.execute({
       users,
       userId,
     })
 
-    return reply.status(200).send(user)
+    return reply.status(200).send({ user })
   } catch (error) {
     if (error instanceof UnauthorizedError) {
       return reply.status(401).send({

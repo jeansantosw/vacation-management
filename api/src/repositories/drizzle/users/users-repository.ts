@@ -1,9 +1,9 @@
+import type { TUserSelect } from '@/helpers/global-types/drizzle-types'
 import type {
-  TUsersInsert,
-  TUserSelect,
-} from '@/helpers/global-types/drizzle-types'
-import type { IGetUsers } from '@/helpers/global-types/users-types/types'
-import type { IUpdateUseCase } from './types'
+  IGetUsers,
+  TCreateUserDTO,
+  TUpdateUserDTOS,
+} from '@/helpers/global-types/users-types/types'
 import type {
   IGetCurrentProfile,
   TUpdateProfile,
@@ -21,9 +21,9 @@ export interface UserRepository {
   findManyByManagerId(userId: string): Promise<IGetUsers[] | null>
   findByIdToUpdateUser(
     userId: string,
-    userUpdate: IUpdateUseCase,
+    userUpdate: TUpdateUserDTOS,
   ): Promise<IGetUsers>
   findByUserIdForShutdown(userId: string): Promise<void>
   findByEmail(email: string): Promise<TUserSelect | null>
-  create(data: TUsersInsert): Promise<TUserSelect>
+  create(data: TCreateUserDTO): Promise<TCreateUserDTO>
 }

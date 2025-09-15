@@ -2,17 +2,13 @@ import type { UserRepository } from '@/repositories/drizzle/users/users-reposito
 import { NotFoundError } from '@/helpers/_errors/not-found-error'
 import { UnauthorizedError } from '@/helpers/_errors/unauthorized-error'
 import { ResourceNotExistsError } from './errors/resource-not-exists-error'
-import type {
-  IGetUsers,
-  IGetUsersByCurremtUsecaseRequest,
-} from '@/helpers/global-types/users-types/types'
+import type { IGetUsers } from '@/helpers/global-types/users-types/types'
+import type { TCurrentId } from '@/helpers/global-types/type'
 
 export class GetUsersUsecase {
   constructor(private userRepository: UserRepository) {}
 
-  async execute({
-    currentUserId,
-  }: IGetUsersByCurremtUsecaseRequest): Promise<IGetUsers[]> {
+  async execute(currentUserId: TCurrentId): Promise<IGetUsers[]> {
     const user = await this.userRepository.findByUserId(currentUserId)
 
     if (!user) {

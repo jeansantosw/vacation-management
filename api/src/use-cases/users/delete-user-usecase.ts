@@ -1,12 +1,12 @@
 import type { UserRepository } from '@/repositories/drizzle/users/users-repository'
-import type { IDeleteUserUseCase } from './types'
 import { NotFoundError } from '@/helpers/_errors/not-found-error'
 import { UnauthorizedError } from '@/helpers/_errors/unauthorized-error'
+import type { IDeleteUserDTO } from '@/helpers/global-types/users-types/types'
 
 export class DeleteUserUseCase {
   constructor(private userRepository: UserRepository) {}
 
-  async execute({ currentUserId, userId }: IDeleteUserUseCase): Promise<void> {
+  async execute({ currentUserId, userId }: IDeleteUserDTO): Promise<void> {
     const user = await this.userRepository.findByUserId(currentUserId)
 
     if (!user) {
