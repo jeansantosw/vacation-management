@@ -1,17 +1,12 @@
-import { userRoleSchema } from '@/helpers/global-types/users-types/types'
+import { userRoleDTOSchema } from '@/helpers/global-types/type'
 import z from 'zod'
 
 export const createUserControllerSchema = z.object({
   email: z.email(),
   password: z.string().min(6).max(16),
   name: z.string(),
-  role: userRoleSchema.default('collaborator'),
+  role: userRoleDTOSchema.default('collaborator'),
   managerId: z.uuid().nullable().optional(),
-})
-
-export const authenticateUserControllerSchema = z.object({
-  email: z.email(),
-  password: z.string().min(6).max(16),
 })
 
 export const getUsersControllersSchema = z.object({
@@ -27,6 +22,6 @@ export type GetUserParams = z.infer<typeof getUserParamsSchema>
 export const updateUserControllerSchema = z.object({
   email: z.email().optional(),
   name: z.string().optional(),
-  role: userRoleSchema.optional(),
+  role: userRoleDTOSchema,
   managerId: z.string().nullable().optional(),
 })

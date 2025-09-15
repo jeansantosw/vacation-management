@@ -1,40 +1,16 @@
 import type { FastifyInstance } from 'fastify'
 import { getUsersControllers } from './get-users-controllers'
 import z, { uuid } from 'zod'
-import {
-  authenticateUserControllerSchema,
-  createUserControllerSchema,
-  updateUserControllerSchema,
-} from './types'
+import { createUserControllerSchema, updateUserControllerSchema } from './types'
 import { createUsersControllers } from './create-users-controllers'
-import { authenticateUsersControllers } from './authenticate-users-controllers'
-import { userRoleSchema } from '@/helpers/global-types/users-types/types'
-import { profileUsersControllers } from './profile-user-controllers'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { auth } from '@/http/middlewares/auth'
 import { getUserControllers } from './get-user-controllers'
 import { updateUserControllers } from './update-user-controllers'
 import { deleteUserControllers } from './delete-user-controllers'
+import { userRoleDTOSchema } from '@/helpers/global-types/type'
 
-export async function appAuthenticateUsersRoutes(app: FastifyInstance) {
-  app.post(
-    '/sessions',
-    {
-      schema: {
-        tags: ['Users'],
-        summary: 'Sessions user',
-        body: authenticateUserControllerSchema,
-        response: {
-          200: z.object({
-            token: z.string(),
-          }),
-        },
-      },
-    },
-    authenticateUsersControllers,
-  )
-}
-
+// User session
 export async function appCreateUsersRoutes(app: FastifyInstance) {
   app
     .withTypeProvider<ZodTypeProvider>()
@@ -44,7 +20,7 @@ export async function appCreateUsersRoutes(app: FastifyInstance) {
       {
         schema: {
           tags: ['Users'],
-          summary: 'Create a user',
+          summary: 'Create a user.',
           description:
             'This route only creates application users. ⚠️ Note: the field `managerId` is required if the role is "collaborator".',
           security: [{ bearerAuth: [] }],
@@ -69,8 +45,7 @@ export async function appGetUsersRoutes(app: FastifyInstance) {
       {
         schema: {
           tags: ['Users'],
-          summary: 'Get all users',
-          description: 'This route lists all users of the application.',
+          summary: 'List all users you have permissions for.',
           security: [{ bearerAuth: [] }],
           response: {
             201: z.object({
@@ -79,7 +54,7 @@ export async function appGetUsersRoutes(app: FastifyInstance) {
                   id: uuid(),
                   name: z.string(),
                   email: z.email(),
-                  role: userRoleSchema,
+                  role: userRoleDTOSchema,
                 }),
               ),
             }),
@@ -87,25 +62,6 @@ export async function appGetUsersRoutes(app: FastifyInstance) {
         },
       },
       getUsersControllers,
-    )
-}
-
-export async function appProfileUserRoutes(app: FastifyInstance) {
-  app
-    .withTypeProvider<ZodTypeProvider>()
-    .register(auth)
-    .post(
-      '/me',
-      {
-        schema: {
-          tags: ['Users'],
-          summary: 'Return profile user',
-          description: 'This route returns authenticated user data.',
-          security: [{ bearerAuth: [] }],
-          response: 200,
-        },
-      },
-      profileUsersControllers,
     )
 }
 
@@ -118,8 +74,7 @@ export async function appGetUserRoutes(app: FastifyInstance) {
       {
         schema: {
           tags: ['Users'],
-          summary: 'Get user by id',
-          description: '',
+          summary: 'Find users by unique identifier.',
           security: [{ bearerAuth: [] }],
           params: z.object({
             id: z.uuid(),
@@ -131,7 +86,7 @@ export async function appGetUserRoutes(app: FastifyInstance) {
                 managerId: uuid().nullable(),
                 name: z.string(),
                 email: z.email(),
-                role: userRoleSchema,
+                role: userRoleDTOSchema,
               }),
             }),
           },
@@ -150,7 +105,7 @@ export async function appUpdateUserRoutes(app: FastifyInstance) {
       {
         schema: {
           tags: ['Users'],
-          summary: 'Update user based on ID',
+          summary: 'Update user based on ID.',
           description:
             'In the update route, pass only the fields that need to be changed. ⚠️ Note: If the role is a `collaborator`, a `manageId` must be passed.',
           security: [{ bearerAuth: [] }],
@@ -165,7 +120,7 @@ export async function appUpdateUserRoutes(app: FastifyInstance) {
                 managerId: uuid().nullable(),
                 name: z.string(),
                 email: z.email(),
-                role: userRoleSchema,
+                role: userRoleDTOSchema,
               }),
             }),
           },
@@ -184,7 +139,7 @@ export async function appDeleteUserRoutes(app: FastifyInstance) {
       {
         schema: {
           tags: ['Users'],
-          summary: 'Delete user based on ID',
+          summary: 'Delete user based on ID.',
           description: 'Only administrators can delete users',
           security: [{ bearerAuth: [] }],
           params: z.object({

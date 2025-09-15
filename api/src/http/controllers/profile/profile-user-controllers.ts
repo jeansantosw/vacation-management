@@ -7,14 +7,10 @@ export async function profileUsersControllers(
 ) {
   const getUserProfileUseCase = makeGetUserProfileUseCase()
 
-  const userId = await request.getCurrentUserId()
+  const currentId = await request.getCurrentUserId()
 
-  const { user } = await getUserProfileUseCase.execute({
-    userId,
-  })
+  const { profile } = await getUserProfileUseCase.execute(currentId)
 
   // Refatorar o retorno de dados do usuario
-  return reply.status(200).send({
-    user,
-  })
+  return reply.status(200).send({ profile })
 }

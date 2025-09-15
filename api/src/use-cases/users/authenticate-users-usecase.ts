@@ -1,10 +1,10 @@
 import type { UserRepository } from '@/repositories/drizzle/users/users-repository'
-import type {
-  IAuthenticateUsersUsecaseRequest,
-  IAuthenticateUsersUsecaseResponse,
-} from './types'
 import { InvalidCredentialsError } from './errors/invalid-credentials-error'
 import { verify } from 'argon2'
+import type {
+  IAuthenticateUsersResponseDTO,
+  TAuthenticateUserDTO,
+} from '@/helpers/global-types/authenticate-types/types'
 
 export class AuthenticateUsersUsecase {
   constructor(private userRepository: UserRepository) {}
@@ -12,7 +12,7 @@ export class AuthenticateUsersUsecase {
   async execute({
     email,
     password,
-  }: IAuthenticateUsersUsecaseRequest): Promise<IAuthenticateUsersUsecaseResponse> {
+  }: TAuthenticateUserDTO): Promise<IAuthenticateUsersResponseDTO> {
     const user = await this.userRepository.findByEmail(email)
 
     if (!user) {
@@ -24,6 +24,6 @@ export class AuthenticateUsersUsecase {
     if (!doesPasswordMatches) {
       throw new InvalidCredentialsError()
     }
-    return { user }
+    return user
   }
 }

@@ -1,27 +1,7 @@
-import type { TUserSelect } from '@/helpers/global-types/drizzle-types'
 import type {
   IGetUsers,
   TUserRoles,
 } from '@/helpers/global-types/users-types/types'
-
-// Interface authenticate
-export interface IAuthenticateUsersUsecaseRequest {
-  email: string
-  password: string
-}
-
-export interface IAuthenticateUsersUsecaseResponse {
-  user: TUserSelect
-}
-
-// Interface profile
-export interface IGetUserProfileUsecaseRequest {
-  userId: string
-}
-
-export interface IGetUserProfileUsecaseResponse {
-  user: IGetUsers
-}
 
 //  Interface get users
 

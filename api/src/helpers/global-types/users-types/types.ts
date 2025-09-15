@@ -1,8 +1,5 @@
 import z from 'zod'
-
-export const userRoleSchema = z.enum(['admin', 'manager', 'collaborator'])
-
-export type TUserRoles = z.infer<typeof userRoleSchema>
+import { userRoleSchema } from '../type'
 
 export const IGetUsersDTOSchema = z.object({
   id: z.string(),

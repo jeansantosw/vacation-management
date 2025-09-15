@@ -3,10 +3,33 @@ import { eq } from 'drizzle-orm'
 import { users } from '@/database/schema'
 import type { TUsersInsert } from '@/helpers/global-types/drizzle-types'
 import type { UserRepository } from './users-repository'
-// import type { IGetUsersBasic } from '@/helpers/global-types/types'
 import type { IUpdateUseCase } from './types'
+import type { TUpdateProfile } from '@/helpers/global-types/profile-types/types'
+import type { TCurrentId } from '@/helpers/global-types/type'
 
 export class DrizzleUsersRepository implements UserRepository {
+  async findByProfileId(currentId: TCurrentId) {
+    const [profile] = await db
+      .select({
+        id: users.id,
+        email: users.email,
+        name: users.name,
+        role: users.role,
+        managerId: users.managerId,
+      })
+      .from(users)
+      .where(eq(users.id, currentId))
+
+    return { profile }
+  }
+
+  async findProfileByIdToUpdate(
+    currentId: TCurrentId,
+    updateProfile: TUpdateProfile,
+  ) {
+    await db.update(users).set(updateProfile).where(eq(users.id, currentId))
+  }
+
   async findByUserIdForShutdown(userId: string) {
     await db.delete(users).where(eq(users.id, userId))
   }

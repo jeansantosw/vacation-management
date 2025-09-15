@@ -1,11 +1,9 @@
 import fastify from 'fastify'
 import {
-  appAuthenticateUsersRoutes,
   appCreateUsersRoutes,
   appDeleteUserRoutes,
   appGetUserRoutes,
   appGetUsersRoutes,
-  appProfileUserRoutes,
   appUpdateUserRoutes,
 } from './http/controllers/users/routes'
 import {
@@ -21,6 +19,11 @@ import fastifySwaggerUi from '@fastify/swagger-ui'
 import z, { ZodError } from 'zod'
 import fastifyJwt from '@fastify/jwt'
 import fastifyCors from '@fastify/cors'
+import { appAuthenticateUsersRoutes } from './http/controllers/authenticate/routes'
+import {
+  appProfileUserRoutes,
+  appUpdateProfileRoutes,
+} from './http/controllers/profile/routes'
 
 export const server = fastify({
   logger: {
@@ -76,9 +79,15 @@ server.register(fastifyCors, {
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // libera só o necessário
   credentials: true,
 })
-// User routes
+
+// Authenticate
 server.register(appAuthenticateUsersRoutes)
+
+// Profile
 server.register(appProfileUserRoutes)
+server.register(appUpdateProfileRoutes)
+
+// User routes
 server.register(appCreateUsersRoutes)
 server.register(appGetUsersRoutes)
 server.register(appGetUserRoutes)
