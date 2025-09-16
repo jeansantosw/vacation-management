@@ -1,7 +1,7 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
-import { makeGetUsersUseCase } from '@/use-cases/factories/make-get-users-usecase'
 import { UnauthorizedError } from '@/helpers/_errors/unauthorized-error'
 import { ResourceNotExistsError } from '@/use-cases/users/errors/resource-not-exists-error'
+import { makeGetUsersUseCase } from '@/use-cases/_factories/users/make-get-users-usecase'
 
 export async function getUsersControllers(
   request: FastifyRequest,
@@ -11,9 +11,7 @@ export async function getUsersControllers(
   try {
     const getUsersUseCase = makeGetUsersUseCase()
 
-    const result = await getUsersUseCase.execute({
-      currentUserId,
-    })
+    const result = await getUsersUseCase.execute(currentUserId)
 
     return reply.send({ users: result })
   } catch (error) {

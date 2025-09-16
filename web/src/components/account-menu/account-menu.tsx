@@ -14,8 +14,8 @@ import {
 import { useAuth } from '@/context/auth-context'
 import { useNavigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
-import { getProfile } from '@/api/users-api/get-profile'
 import { StoreProfileDialog } from './store-profile-dialog'
+import { getProfile } from '@/api/services/profile-api/get-profile'
 
 export function AccountMenu() {
   const { logout } = useAuth()
@@ -62,7 +62,6 @@ export function AccountMenu() {
 
           <DropdownMenuItem
             asChild
-
             className="text-rose-500 dark:text-rose-400"
           >
             <button onClick={handleLogout} className="w-full">

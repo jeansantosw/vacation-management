@@ -1,21 +1,18 @@
 import { hash } from 'argon2'
 import type { UserRepository } from '@/repositories/drizzle/users/users-repository'
 import { UserAlreadyExistsError } from './errors/user-already-exists-error'
-import type { ICreateUsersUsecaseRequest } from './types'
 import { UnauthorizedError } from '@/helpers/_errors/unauthorized-error'
 import { NotFoundError } from '@/helpers/_errors/not-found-error'
+import type { TCreateUserDTO } from '@/helpers/global-types/users-types/types'
+import type { TCurrentId } from '@/helpers/global-types/type'
 
 export class CreateUsersUsecase {
   constructor(private usersRepository: UserRepository) {}
-  async execute({
-    email,
-    password,
-    name,
-    role,
-    userId,
-    managerId,
-  }: ICreateUsersUsecaseRequest) {
-    const requestingUser = await this.usersRepository.findByUserId(userId)
+  async execute(
+    currentId: TCurrentId,
+    { email, password, name, role, managerId }: TCreateUserDTO,
+  ): Promise<TCreateUserDTO> {
+    const requestingUser = await this.usersRepository.findByUserId(currentId)
 
     if (!requestingUser || requestingUser.role !== 'admin') {
       throw new UnauthorizedError('Only administrators can create users.')
@@ -51,6 +48,6 @@ export class CreateUsersUsecase {
       managerId: role === 'collaborator' ? managerId : null,
     })
 
-    return { user }
+    return user
   }
 }

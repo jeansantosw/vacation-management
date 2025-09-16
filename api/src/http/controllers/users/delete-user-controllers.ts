@@ -1,11 +1,11 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
 import { UnauthorizedError } from '@/helpers/_errors/unauthorized-error'
-import { type GetUserParams } from './types'
 import { NotFoundError } from '@/helpers/_errors/not-found-error'
-import { makeDeleteUserUseCase } from '@/use-cases/factories/make-delete-user-usecase'
+import { makeDeleteUserUseCase } from '@/use-cases/_factories/users/make-delete-user-usecase'
+import type { TUserParamsDTOS } from '@/helpers/global-types/users-types/types'
 
 export async function deleteUserControllers(
-  request: FastifyRequest<{ Params: GetUserParams }>,
+  request: FastifyRequest<{ Params: TUserParamsDTOS }>,
   reply: FastifyReply,
 ) {
   const currentUserId = await request.getCurrentUserId()

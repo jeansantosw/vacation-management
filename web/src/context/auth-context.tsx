@@ -1,5 +1,4 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react'
-import { signIn as signInApi } from '@/api/users-api/sign-in'
 
 interface AuthContextType {
   token: string | null
@@ -16,6 +15,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = async (email: string, password: string) => {
     const token = await signInApi({ email, password })
     localStorage.setItem('token', token)
+    console.log("###### TOKEN: ", token)
     setToken(token)
   }
 
@@ -42,3 +42,7 @@ export function useAuth() {
   if (!context) throw new Error('useAuth must be used inside AuthProvider')
   return context
 }
+function signInApi(arg0: { email: string; password: string }) {
+  throw new Error('Function not implemented.')
+}
+

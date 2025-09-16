@@ -1,15 +1,14 @@
 import type { UserRepository } from '@/repositories/drizzle/users/users-repository'
-import type { IGetUsersUsecaseRequest, IGetUsersUsecaseResponse } from './types'
 import { NotFoundError } from '@/helpers/_errors/not-found-error'
 import { UnauthorizedError } from '@/helpers/_errors/unauthorized-error'
 import { ResourceNotExistsError } from './errors/resource-not-exists-error'
+import type { IGetUsers } from '@/helpers/global-types/users-types/types'
+import type { TCurrentId } from '@/helpers/global-types/type'
 
 export class GetUsersUsecase {
   constructor(private userRepository: UserRepository) {}
 
-  async execute({
-    currentUserId,
-  }: IGetUsersUsecaseRequest): Promise<IGetUsersUsecaseResponse> {
+  async execute(currentUserId: TCurrentId): Promise<IGetUsers[]> {
     const user = await this.userRepository.findByUserId(currentUserId)
 
     if (!user) {
@@ -25,17 +24,18 @@ export class GetUsersUsecase {
     if (user.role === 'admin') {
       const users = await this.userRepository.findManyUser()
       if (!users) {
-        throw new ResourceNotExistsError()
+        throw new ResourceNotExistsError('Empty user list')
       }
-      return { users }
+      return users
     }
 
     if (user.role === 'manager') {
       const users = await this.userRepository.findManyByManagerId(user.id)
       if (!users) {
-        throw new ResourceNotExistsError()
+        throw new ResourceNotExistsError('Empty user list')
       }
-      return { users }
+
+      return users
     }
 
     throw new UnauthorizedError('Invalid role.')

@@ -1,7 +1,7 @@
 import { DrizzleUsersRepository } from '@/repositories/drizzle/users/drizzle-users-repository'
-import { GetUserDetailsUsecase } from '../users/get-user-details-usecase'
-import { GetUsersUsecase } from '../users/get-users-usecase'
-import { UpdateUserUseCase } from '../users/update-user-usecase'
+import { GetUserDetailsUsecase } from '@/use-cases/users/get-user-details-usecase'
+import { GetUsersUsecase } from '@/use-cases/users/get-users-usecase'
+import { UpdateUserUseCase } from '@/use-cases/users/update-user-usecase'
 
 export function makeUpdateUserUseCase() {
   const usersRepository = new DrizzleUsersRepository()

@@ -1,20 +1,17 @@
 import type { UserRepository } from '@/repositories/drizzle/users/users-repository'
-import type {
-  IUpdateUserUseCaseRequest,
-  IUpdateUserUseCaseResponse,
-} from './types'
 import { NotFoundError } from '@/helpers/_errors/not-found-error'
+import type {
+  IGetUsers,
+  TUpdateUserDTOS,
+} from '@/helpers/global-types/users-types/types'
 
 export class UpdateUserUseCase {
   constructor(private userRepository: UserRepository) {}
 
-  async execute({
-    user,
-    email,
-    name,
-    role,
-    managerId,
-  }: IUpdateUserUseCaseRequest): Promise<IUpdateUserUseCaseResponse> {
+  async execute(
+    user: IGetUsers,
+    { email, name, role, managerId }: TUpdateUserDTOS,
+  ): Promise<IGetUsers> {
     if (!user) {
       throw new NotFoundError('User not found.')
     }
