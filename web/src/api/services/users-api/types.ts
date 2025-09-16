@@ -3,17 +3,11 @@ export interface ISignInBody {
   password: string
 }
 
-// export interface IGetUsersBasicResponse {
-//   profile: {
-//   id: string
-//   email: string
-//   name: string
-//   role: 'admin' | 'manager' | 'collaborator'
-//   managerId: string | null
-//   }
-// }
+export interface IGetUserDetails {
+  userId: string
+}
 
-interface IUser {
+export interface IUser {
   id: string
   email: string
   name: string
@@ -23,4 +17,14 @@ interface IUser {
 
 export interface IGetUsersResponse {
   users: IUser[]
+}
+
+export interface IGetUserDatails {
+  user: {
+    id: string
+    email: string
+    name: string
+    role: 'admin' | 'manager' | 'collaborator'
+    managerId: string | null
+  }
 }

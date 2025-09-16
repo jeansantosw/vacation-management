@@ -1,4 +1,4 @@
-import { Users } from './users/users'
+import { Users } from './users/components/users'
 
 export function Dashboard() {
   return (

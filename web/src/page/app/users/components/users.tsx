@@ -9,7 +9,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
-import { UserTableRow } from './user.table.row'
+import { UserTableRow } from './user-table.row'
 
 export function Users() {
   const { data: users, isLoading } = useQuery({

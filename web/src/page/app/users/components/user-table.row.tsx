@@ -1,18 +1,16 @@
-import { Search, UserRoundPen, UserRoundX } from 'lucide-react'
+import { UserRoundPen, UserRoundX } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { TableCell, TableRow } from '@/components/ui/table'
 
-import type { IUserTableRow } from './types'
+import type { IUserTableRow } from '../types'
+import { UserDetails } from './user-datails'
 
 export function UserTableRow({ user }: IUserTableRow) {
   return (
     <TableRow>
       <TableCell>
-        <Button>
-          <Search className="h-3 w-3" />
-          <span className="sr-only">Detalhes do usuário</span>
-        </Button>
+        <UserDetails userId={user.id} />
       </TableCell>
       <TableCell className="font-mono text-xs font-medium">{user.id}</TableCell>
       <TableCell>{user.email}</TableCell>
