@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from "../ui/button";
 import { DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../ui/dialog";
@@ -8,17 +8,52 @@ import { updateProfile } from "@/api/services/profile-api/update-profile";
 import { useForm } from "react-hook-form";
 import { profileDialogFormSchema, type TprofileDialogForm } from "./types";
 import { toast } from "sonner";
+import type { IGetProfileResponse } from "@/api/services/profile-api/types";
+import { getProfile } from "@/api/services/profile-api/get-profile";
 
 export function StoreProfileDialog() {
+  const queryClient = useQueryClient()
 
+  const { data: getProfileFn } = useQuery({
+    queryKey: ['profile'],
+    queryFn: getProfile
+  })
 
+  function updateProfileCache({ name, email }: TprofileDialogForm) {
+    const cached = queryClient.getQueryData<IGetProfileResponse>(['profile'])
+
+    if (cached) {
+      queryClient.setQueryData(['profile'], {
+        ...cached,
+        name,
+        email,
+      })
+    }
+
+    return { cached }
+  }
 
   const { mutateAsync: updateProfileFn } = useMutation({
-    mutationFn: updateProfile
+    mutationFn: updateProfile,
+    onMutate({ name, email }) {
+      const { cached } = updateProfileCache({ name, email })
+      return { previousProfile: cached }
+    },
+
+    onError(_, __, context) {
+      if (context?.previousProfile?.profile) {
+        updateProfileCache(context.previousProfile.profile)
+      }
+    }
   })
+
 
   const { register, handleSubmit } = useForm<TprofileDialogForm>({
     resolver: zodResolver(profileDialogFormSchema),
+    values: {
+      name: getProfileFn?.name ?? '',
+      email: getProfileFn?.email ?? '',
+    }
   })
 
   async function handleSubmitUpdateProfile(data: TprofileDialogForm) {

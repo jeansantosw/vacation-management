@@ -4,15 +4,15 @@ export interface ISignInBody {
 }
 
 
-export interface IGetUsersBasicResponse {
-  profile: {
-  id: string
-  email: string
-  name: string
-  role: 'admin' | 'manager' | 'collaborator'
-  managerId: string | null
-  }
-}
+// export interface IGetUsersBasicResponse {
+//   profile: {
+//   id: string
+//   email: string
+//   name: string
+//   role: 'admin' | 'manager' | 'collaborator'
+//   managerId: string | null
+//   }
+// }
 
 interface IUser {
   id: string
