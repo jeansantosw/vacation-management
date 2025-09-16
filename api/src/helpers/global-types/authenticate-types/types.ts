@@ -1,4 +1,5 @@
 import z from 'zod'
+import type { TUserRolesDTO } from '../type'
 
 export const authenticateUserDTOSchema = z.object({
   email: z.email(),
@@ -10,7 +11,8 @@ export type TAuthenticateUserDTO = z.infer<typeof authenticateUserDTOSchema>
 export interface IAuthenticateUsersResponseDTO {
   email: string
   name: string
-  role: 'admin' | 'manager' | 'collaborator'
+  password: string
+  role: TUserRolesDTO
   id: string
   managerId: string | null
   createdAt: Date

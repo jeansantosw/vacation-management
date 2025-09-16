@@ -1,4 +1,4 @@
-import type { TUserSelect } from '@/helpers/global-types/drizzle-types'
+// import type { TUserSelect } from '@/helpers/global-types/drizzle-types'
 import type {
   IGetUsers,
   TCreateUserDTO,
@@ -9,6 +9,7 @@ import type {
   TUpdateProfile,
 } from '@/helpers/global-types/profile-types/types'
 import type { TCurrentId } from '@/helpers/global-types/type'
+import type { IAuthenticateUsersResponseDTO } from '@/helpers/global-types/authenticate-types/types'
 
 export interface UserRepository {
   findByUserId(id: string): Promise<IGetUsers | null>
@@ -24,6 +25,6 @@ export interface UserRepository {
     userUpdate: TUpdateUserDTOS,
   ): Promise<IGetUsers>
   findByUserIdForShutdown(userId: string): Promise<void>
-  findByEmail(email: string): Promise<TUserSelect | null>
+  findByEmail(email: string): Promise<IAuthenticateUsersResponseDTO | null>
   create(data: TCreateUserDTO): Promise<TCreateUserDTO>
 }
