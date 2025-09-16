@@ -41,7 +41,7 @@ export type TUserParamsDTOS = z.infer<typeof userParamsDTOSchema>
 // #################### UPDATE  ####################
 
 export const updateUserDTOSchema = z.object({
-  email: z.email().optional(),
+  email: z.string().optional(),
   name: z.string().optional(),
   role: userRoleDTOSchema.optional(),
   managerId: z.string().nullable().optional(),

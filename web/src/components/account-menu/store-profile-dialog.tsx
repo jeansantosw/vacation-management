@@ -1,10 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
-import { getProfile } from '@/api/services/profile-api/get-profile'
-import type { IGetProfileResponse } from '@/api/services/profile-api/types'
+// import { getProfile } from '@/api/services/profile-api/get-profile'
+// import type { IGetProfileResponse } from '@/api/services/profile-api/types'
 import { updateProfile } from '@/api/services/profile-api/update-profile'
 
 import { Button } from '../ui/button'
@@ -23,45 +23,53 @@ import { profileDialogFormSchema, type TprofileDialogForm } from './types'
 export function StoreProfileDialog() {
   const queryClient = useQueryClient()
 
-  const { data: getProfileFn } = useQuery({
-    queryKey: ['profile'],
-    queryFn: getProfile,
-  })
+  // TODO CÓDIGO COMENTADO É PARA ATIVAR A MUTAÇÃO DA CONSULTA REACT!
+  // ESTÁ FUNCIONANDO, SE FOR APROPRIADO PARA ESTA TELA, É SÓ DESCOMENTAR
+  // O CÓDIGO É TOTALMENTE FUNCIONAL
 
-  function updateProfileCache({ name, email }: TprofileDialogForm) {
-    const cached = queryClient.getQueryData<IGetProfileResponse>(['profile'])
+  // const { data: getProfileFn } = useQuery({
+  //   queryKey: ['profile'],
+  //   queryFn: getProfile,
+  //   // staleTime: Infinity
+  // })
 
-    if (cached) {
-      queryClient.setQueryData(['profile'], {
-        ...cached,
-        name,
-        email,
-      })
-    }
+  // function updateProfileCache({ name, email }: TprofileDialogForm) {
+  //   const cached = queryClient.getQueryData<IGetProfileResponse>(['profile'])
 
-    return { cached }
-  }
+  //   if (cached) {
+  //     queryClient.setQueryData(['profile'], {
+  //       ...cached,
+  //       name,
+  //       email,
+  //     })
+  //   }
+
+  //   return { cached }
+  // }
 
   const { mutateAsync: updateProfileFn } = useMutation({
     mutationFn: updateProfile,
-    onMutate({ name, email }) {
-      const { cached } = updateProfileCache({ name, email })
-      return { previousProfile: cached }
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['profile'] })
     },
+    // onMutate({ name, email }) {
+    //   const { cached } = updateProfileCache({ name, email })
+    //   return { previousProfile: cached }
+    // },
 
-    onError(_, __, context) {
-      if (context?.previousProfile?.profile) {
-        updateProfileCache(context.previousProfile.profile)
-      }
-    },
+    // onError(_, __, context) {
+    //   if (context?.previousProfile?.profile) {
+    //     updateProfileCache(context.previousProfile.profile)
+    //   }
+    // },
   })
 
   const { register, handleSubmit } = useForm<TprofileDialogForm>({
     resolver: zodResolver(profileDialogFormSchema),
-    values: {
-      name: getProfileFn?.name ?? '',
-      email: getProfileFn?.email ?? '',
-    },
+    // values: {
+    //   name: getProfileFn?.name ?? '',
+    //   email: getProfileFn?.email ?? '',
+    // },
   })
 
   async function handleSubmitUpdateProfile(data: TprofileDialogForm) {
