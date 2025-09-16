@@ -25,10 +25,10 @@ export class UpdateUserUseCase {
     const updatedUser = await this.userRepository.findByIdToUpdateUser(
       user.id,
       {
-        email,
-        name,
-        role,
-        managerId: null,
+        ...(email && { email }),
+        ...(name && { name }),
+        ...(role && { role }),
+        ...(managerId && { managerId }),
       },
     )
 

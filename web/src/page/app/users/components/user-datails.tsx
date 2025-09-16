@@ -1,12 +1,18 @@
-import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table"
-import { Search } from "lucide-react"
-import { useQuery } from '@tanstack/react-query';
-import { getUserDetails } from "@/api/services/users-api/get-user-details";
-import type { IGetUserDetails } from "@/api/services/users-api/types";
-import { useState } from "react";
+import { useQuery } from '@tanstack/react-query'
+import { Search } from 'lucide-react'
+import { useState } from 'react'
 
+import { getUserDetails } from '@/api/services/users-api/get-user-details'
+import type { IGetUserDetails } from '@/api/services/users-api/types'
+import { Button } from '@/components/ui/button'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 
 export function UserDetails(userId: IGetUserDetails) {
   const [open, setOpen] = useState(false)
@@ -14,7 +20,7 @@ export function UserDetails(userId: IGetUserDetails) {
   const { data: getUserDetailsFn } = useQuery({
     queryKey: ['user-details', userId],
     queryFn: () => getUserDetails(userId),
-    enabled: open
+    enabled: open,
   })
 
   return (
@@ -26,9 +32,7 @@ export function UserDetails(userId: IGetUserDetails) {
         </Button>
       </DialogTrigger>
       <DialogContent>
-        <DialogTitle>
-          Detalhes do usuário
-        </DialogTitle>
+        <DialogTitle>Detalhes do usuário</DialogTitle>
         <DialogHeader className="mb-3">
           <span className="text-primary/80 font-semibold tracking-tight">
             <span className="text-muted-foreground pr-1">
@@ -40,9 +44,7 @@ export function UserDetails(userId: IGetUserDetails) {
           <Table>
             <TableBody>
               <TableRow>
-                <TableCell className="text-muted-foreground">
-                  Cargo
-                </TableCell>
+                <TableCell className="text-muted-foreground">Cargo</TableCell>
                 <TableCell className="flex justify-end">
                   <div className="flex items-center gap-2">
                     <span className="text-muted-foreground font-medium uppercase">
@@ -52,9 +54,7 @@ export function UserDetails(userId: IGetUserDetails) {
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className="text-muted-foreground">
-                  Férias
-                </TableCell>
+                <TableCell className="text-muted-foreground">Férias</TableCell>
                 <TableCell className="flex justify-end">
                   <div className="flex items-center gap-2">
                     <span className="h-2 w-2 rounded-full bg-yellow-500" />
@@ -63,9 +63,7 @@ export function UserDetails(userId: IGetUserDetails) {
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className="text-muted-foreground">
-                  E-mail
-                </TableCell>
+                <TableCell className="text-muted-foreground">E-mail</TableCell>
                 <TableCell className="flex justify-end">
                   {getUserDetailsFn?.email}
                 </TableCell>
@@ -79,15 +77,11 @@ export function UserDetails(userId: IGetUserDetails) {
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className="text-muted-foreground">
-                  Manager
-                </TableCell>
+                <TableCell className="text-muted-foreground">Manager</TableCell>
                 <TableCell className="flex justify-end">
                   {getUserDetailsFn?.managerId ?? '-'}
-
                 </TableCell>
               </TableRow>
-
             </TableBody>
           </Table>
         </div>
