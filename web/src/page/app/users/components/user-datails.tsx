@@ -57,9 +57,8 @@ export function UserDetails(userId: IGetUserDetails) {
                 </TableCell>
                 <TableCell className="flex justify-end">
                   <div className="flex items-center gap-2">
-                    <span className="text-muted-foreground font-medium">
-                      Pendente
-                    </span>
+                    <span className="h-2 w-2 rounded-full bg-yellow-500" />
+                    <span>Pendente</span>
                   </div>
                 </TableCell>
               </TableRow>
