@@ -1,4 +1,4 @@
-import { api } from '../axios'
+import { api } from '@/api/axios'
 import type { ISignInBody } from './types'
 
 export async function signIn({ email, password }: ISignInBody) {

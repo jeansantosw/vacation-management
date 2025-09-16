@@ -16,9 +16,9 @@ export class UpdateProfileUseCase {
     }
 
     await this.userRepository.findProfileByIdToUpdate(currentId, {
-      email,
+      ...(email && { email }),
+      ...(name && { name }),
       ...(passwordHash && { password: passwordHash }),
-      name,
     })
   }
 }

@@ -8,11 +8,10 @@ import {
 
 import { UserTableRow } from './user.table.row'
 import { useQuery } from '@tanstack/react-query'
-import { getUsers } from '@/api/users-api/get-users'
-import type { IUser } from '@/api/users-api/types';
+import { getUsers } from '@/api/services/users-api/get-users'
 
 export function Users() {
-  const { data: users = [], isLoading } = useQuery<IUser[]>({
+  const { data: users, isLoading } = useQuery({
     queryKey: ['users'],
     queryFn: getUsers
   })

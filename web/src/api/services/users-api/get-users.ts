@@ -1,4 +1,4 @@
-import { api } from "../axios";
+import { api } from "@/api/axios";
 import type { IGetUsersResponse } from "./types";
 
 export async function getUsers() {
