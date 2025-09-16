@@ -1,12 +1,12 @@
 import { createBrowserRouter } from 'react-router-dom'
 
+import { PrivateRoute } from '@/auth/private-router'
 import { AppLayout } from '@/page/_layout/app'
 import { AuthLayout } from '@/page/_layout/auth'
 import { NotFound } from '@/page/404'
 import { Dashboard } from '@/page/app/dashboard'
 import { SignIn } from '@/page/auth/sign-in'
 import { Error } from '@/page/error'
-import { PrivateRoute } from '@/auth/private-router'
 
 export const routes = createBrowserRouter([
   {

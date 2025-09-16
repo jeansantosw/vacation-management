@@ -1,7 +1,9 @@
-import { api } from "../axios"
+import { api } from '@/api/axios'
 
-export async function updateUsers(id: string) {
-  const { data } = await api.put(`/user/${id}`)
+import type { TUpdateUser } from './types'
 
-  return data
+export async function updateUsers(id: string, data: TUpdateUser) {
+  const response = await api.put(`/user/${id}`, data)
+
+  return response.data
 }

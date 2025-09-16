@@ -1,3 +1,6 @@
+import { useQuery } from '@tanstack/react-query'
+
+import { getUsers } from '@/api/services/users-api/get-users'
 import {
   Table,
   TableBody,
@@ -6,14 +9,12 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
-import { UserTableRow } from './user.table.row'
-import { useQuery } from '@tanstack/react-query'
-import { getUsers } from '@/api/services/users-api/get-users'
+import { UserTableRow } from './user-table.row'
 
 export function Users() {
   const { data: users, isLoading } = useQuery({
     queryKey: ['users'],
-    queryFn: getUsers
+    queryFn: getUsers,
   })
 
   return (
@@ -29,7 +30,7 @@ export function Users() {
                   <TableHead className="w-16"></TableHead>
                   <TableHead className="w-64">Identificador</TableHead>
                   <TableHead className="w-56">E-mail</TableHead>
-                  <TableHead className='w-48'>Nome</TableHead>
+                  <TableHead className="w-48">Nome</TableHead>
                   <TableHead className="w-44">Cargo</TableHead>
                   <TableHead className="w-36">Férias</TableHead>
                   <TableHead className="w-16"></TableHead>
@@ -39,7 +40,7 @@ export function Users() {
               {isLoading ? (
                 <TableBody>
                   <TableRow>
-                    <td colSpan={8} className="text-center p-4">
+                    <td colSpan={8} className="p-4 text-center">
                       Carregando usuários...
                     </td>
                   </TableRow>
@@ -52,7 +53,7 @@ export function Users() {
                     ))
                   ) : (
                     <TableRow>
-                      <td colSpan={8} className="text-center p-4">
+                      <td colSpan={8} className="p-4 text-center">
                         Nenhum usuário encontrado.
                       </td>
                     </TableRow>

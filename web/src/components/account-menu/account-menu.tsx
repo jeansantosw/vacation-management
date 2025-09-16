@@ -1,5 +1,9 @@
-
+import { useQuery } from '@tanstack/react-query'
 import { ChevronDown, LogOut, Settings } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+
+import { getProfile } from '@/api/services/profile-api/get-profile'
+import { useAuth } from '@/context/auth-context'
 
 import { Button } from '../ui/button'
 import { Dialog, DialogTrigger } from '../ui/dialog'
@@ -11,11 +15,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu'
-import { useAuth } from '@/context/auth-context'
-import { useNavigate } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
 import { StoreProfileDialog } from './store-profile-dialog'
-import { getProfile } from '@/api/services/profile-api/get-profile'
 
 export function AccountMenu() {
   const { logout } = useAuth()
@@ -28,7 +28,7 @@ export function AccountMenu() {
 
   const { data: getProfileFn } = useQuery({
     queryKey: ['profile'],
-    queryFn: getProfile
+    queryFn: getProfile,
   })
 
   return (

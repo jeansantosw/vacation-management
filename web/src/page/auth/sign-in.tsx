@@ -3,12 +3,12 @@ import { useForm } from 'react-hook-form'
 import { useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 
+import { signIn } from '@/api/services/users-api/sign-in'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 
 import type { TSigninForm } from './types'
-import { signIn } from '@/api/services/users-api/sign-in'
 
 export function SignIn() {
   const [searchParams] = useSearchParams()
@@ -31,7 +31,6 @@ export function SignIn() {
       await authenticateFn({ email, password })
       toast.success('Login bem-sucedido 🔓')
       window.location.href = '/'
-
     } catch {
       toast.error('Credenciais inválidas ❌')
     }
