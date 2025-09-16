@@ -1,22 +1,31 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Button } from "../ui/button";
-import { DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../ui/dialog";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
-import { updateProfile } from "@/api/services/profile-api/update-profile";
-import { useForm } from "react-hook-form";
-import { profileDialogFormSchema, type TprofileDialogForm } from "./types";
-import { toast } from "sonner";
-import type { IGetProfileResponse } from "@/api/services/profile-api/types";
-import { getProfile } from "@/api/services/profile-api/get-profile";
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
+
+import { getProfile } from '@/api/services/profile-api/get-profile'
+import type { IGetProfileResponse } from '@/api/services/profile-api/types'
+import { updateProfile } from '@/api/services/profile-api/update-profile'
+
+import { Button } from '../ui/button'
+import {
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '../ui/dialog'
+import { Input } from '../ui/input'
+import { Label } from '../ui/label'
+import { profileDialogFormSchema, type TprofileDialogForm } from './types'
 
 export function StoreProfileDialog() {
   const queryClient = useQueryClient()
 
   const { data: getProfileFn } = useQuery({
     queryKey: ['profile'],
-    queryFn: getProfile
+    queryFn: getProfile,
   })
 
   function updateProfileCache({ name, email }: TprofileDialogForm) {
@@ -44,16 +53,15 @@ export function StoreProfileDialog() {
       if (context?.previousProfile?.profile) {
         updateProfileCache(context.previousProfile.profile)
       }
-    }
+    },
   })
-
 
   const { register, handleSubmit } = useForm<TprofileDialogForm>({
     resolver: zodResolver(profileDialogFormSchema),
     values: {
       name: getProfileFn?.name ?? '',
       email: getProfileFn?.email ?? '',
-    }
+    },
   })
 
   async function handleSubmitUpdateProfile(data: TprofileDialogForm) {
@@ -61,7 +69,7 @@ export function StoreProfileDialog() {
       await updateProfileFn({
         name: data.name,
         email: data.email,
-        password: data.password
+        password: data.password,
       })
 
       toast.success('Atualizado com sucesso!🔥')
@@ -69,7 +77,6 @@ export function StoreProfileDialog() {
       toast.error('Falha ao atualizar!❌')
     }
   }
-
 
   return (
     <DialogContent>
@@ -101,7 +108,6 @@ export function StoreProfileDialog() {
               id="email"
               type="email"
               {...register('email')}
-
             />
           </div>
           <div className="flex flex-col gap-4">
@@ -126,9 +132,8 @@ export function StoreProfileDialog() {
           <Button type="submit" variant="success" className="cursor-pointer">
             Salvar
           </Button>
-
         </DialogFooter>
       </form>
-    </DialogContent >
+    </DialogContent>
   )
 }

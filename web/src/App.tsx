@@ -2,9 +2,10 @@ import { QueryClientProvider } from '@tanstack/react-query'
 import { RouterProvider } from 'react-router-dom'
 import { Toaster } from 'sonner'
 
+import { AuthProvider } from '@/context/auth-context'
+
 import { queryClient } from './api/react-query'
 import { routes } from './router/routes'
-import { AuthProvider } from '@/context/auth-context'
 
 export function App() {
   return (

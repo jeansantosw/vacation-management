@@ -3,7 +3,6 @@ export interface ISignInBody {
   password: string
 }
 
-
 // export interface IGetUsersBasicResponse {
 //   profile: {
 //   id: string
