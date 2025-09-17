@@ -1,5 +1,5 @@
 import { db } from '@/database/client'
-import { eq } from 'drizzle-orm'
+import { asc, eq } from 'drizzle-orm'
 import { users } from '@/database/schema'
 import type { UserRepository } from './users-repository'
 import type { TUpdateProfile } from '@/helpers/global-types/profile-types/types'
@@ -77,6 +77,7 @@ export class DrizzleUsersRepository implements UserRepository {
         managerId: users.managerId,
       })
       .from(users)
+      .orderBy(asc(users.name))
 
     return user
   }
@@ -91,6 +92,7 @@ export class DrizzleUsersRepository implements UserRepository {
         managerId: users.managerId,
       })
       .from(users)
+      .orderBy(asc(users.name))
       .where(eq(users.managerId, userId))
 
     return user
