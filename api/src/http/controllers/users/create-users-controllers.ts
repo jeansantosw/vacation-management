@@ -25,7 +25,7 @@ export async function createUsersControllers(
       managerId,
     })
 
-    return reply.status(201).send({ userId: user.id })
+    return reply.status(201).send({ userId: user })
   } catch (error) {
     if (error instanceof UserAlreadyExistsError) {
       return reply.status(409).send({ message: error.message })
