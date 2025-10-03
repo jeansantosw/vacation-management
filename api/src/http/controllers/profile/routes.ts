@@ -4,6 +4,7 @@ import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { profileUsersControllers } from './profile-user-controllers'
 import { updateProfileSchema } from '@/helpers/global-types/profile-types/types'
 import { updateProfileControllers } from './update-profile-controllers'
+import z from 'zod'
 
 // Profile session
 export async function appProfileUserRoutes(app: FastifyInstance) {
@@ -18,7 +19,20 @@ export async function appProfileUserRoutes(app: FastifyInstance) {
           summary: 'Return profile user.',
           description: 'This route returns authenticated user data.',
           security: [{ bearerAuth: [] }],
-          response: 200,
+          response: {
+            200: z.object({
+              profile: z.object({
+                id: z.string(),
+                email: z.string(),
+                name: z.string(),
+                role: z.string(),
+                managerId: z.string().nullable(),
+              }),
+            }),
+            404: z.object({
+              message: z.string().describe('Resource not found.'),
+            }),
+          },
         },
       },
       profileUsersControllers,
