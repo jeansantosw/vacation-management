@@ -9,16 +9,10 @@ export class UpdateProfileUseCase {
     currentId: TCurrentId,
     { email, password, name }: TUpdateProfile,
   ) {
-    let passwordHash: string | undefined
-
-    if (password) {
-      passwordHash = await hash(password)
-    }
-
     await this.userRepository.findProfileByIdToUpdate(currentId, {
       ...(email && { email }),
       ...(name && { name }),
-      ...(passwordHash && { password: passwordHash }),
+      ...(password && { password: await hash(password) }),
     })
   }
 }
