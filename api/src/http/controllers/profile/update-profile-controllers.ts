@@ -14,7 +14,7 @@ export async function updateProfileControllers(
 
     await updateProfileUseCase.execute(currentUserId, { email, password, name })
 
-    return reply.status(200).send()
+    return reply.status(204).send()
   } catch {
     throw new Error()
   }

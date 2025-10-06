@@ -14,8 +14,8 @@ import {
 } from 'fastify-type-provider-zod'
 import { env } from './env'
 import fastifySwagger from '@fastify/swagger'
-// import scalarAPIReference from '@scalar/fastify-api-reference'
-import fastifySwaggerUi from '@fastify/swagger-ui'
+import scalarAPIReference from '@scalar/fastify-api-reference'
+// import fastifySwaggerUi from '@fastify/swagger-ui'
 import z, { ZodError } from 'zod'
 import fastifyJwt from '@fastify/jwt'
 import fastifyCors from '@fastify/cors'
@@ -65,13 +65,13 @@ if (env.NODE_ENV === 'development') {
     transform: jsonSchemaTransform,
   })
 
-  server.register(fastifySwaggerUi, {
-    routePrefix: '/docs',
-  })
-
-  // server.register(scalarAPIReference, {
+  // server.register(fastifySwaggerUi, {
   //   routePrefix: '/docs',
   // })
+
+  server.register(scalarAPIReference, {
+    routePrefix: '/docs',
+  })
 }
 
 server.register(fastifyCors, {
